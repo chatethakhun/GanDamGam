@@ -25,6 +25,7 @@ public class HomeScreen extends Screen {
     private final ScreenStack ss;
     private final GamePlay gamePlay;
     private final Setting setting;
+    private final LoadGameScreen loadGame;
     private final ImageLayer bgLayer;
     private final ImageLayer logoLayer;
     private final ImageLayer newButton;
@@ -39,6 +40,7 @@ public class HomeScreen extends Screen {
         this.ss = ss;
         this.gamePlay = new GamePlay(ss);
         this.setting = new Setting(ss);
+        this.loadGame = new LoadGameScreen(ss);
 
 
 
@@ -61,7 +63,7 @@ public class HomeScreen extends Screen {
 
         Image settingImage = assets().getImage("images/setting.png");
         this.settingLayer = graphics().createImageLayer(settingImage);
-        settingLayer.setTranslation(10, 400);
+        settingLayer.setTranslation(20, 400);
 
         newButton.addListener(new Mouse.LayerAdapter(
 
@@ -83,7 +85,7 @@ public class HomeScreen extends Screen {
         loadLayer.addListener(new Mouse.LayerAdapter(){
 
             public void onMouseUp(Mouse.ButtonEvent event) {
-                super.onMouseUp(event);
+                ss.push(loadGame);
             }
         });
 

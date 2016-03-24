@@ -25,28 +25,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MyGame.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MyGame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/MyGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43187067">
+            <state vertical-scroll-proportion="-13.851851">
               <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HomeScreen.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="HomeScreen.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/HomeScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.518518">
-              <caret line="87" column="11" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.31293303">
+              <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
               <folding>
-                <element signature="e#1844#2001#0" expanded="true" />
-                <element signature="e#2000#2001#0" expanded="true" />
-                <element signature="e#2038#2192#0" expanded="true" />
-                <element signature="e#2191#2192#0" expanded="true" />
-                <element signature="e#2226#2377#0" expanded="true" />
-                <element signature="e#2376#2377#0" expanded="true" />
+                <element signature="e#1935#2092#0" expanded="true" />
+                <element signature="e#2091#2092#0" expanded="true" />
+                <element signature="e#2129#2283#0" expanded="true" />
+                <element signature="e#2282#2283#0" expanded="true" />
+                <element signature="e#2317#2463#0" expanded="true" />
+                <element signature="e#2462#2463#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -55,9 +55,13 @@
       <file leaf-file-name="LoadGameScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/LoadGameScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.4074073">
-              <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-              <folding />
+            <state vertical-scroll-proportion="-16.333334">
+              <caret line="42" column="36" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1089#1238#0" expanded="true" />
+                <element signature="e#1237#1238#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,11 +69,10 @@
       <file leaf-file-name="GamePlay.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.555555">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state vertical-scroll-proportion="-18.222221">
+              <caret line="31" column="56" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#854#1002#0" expanded="true" />
                 <element signature="e#1001#1002#0" expanded="true" />
               </folding>
             </state>
@@ -79,12 +82,12 @@
       <file leaf-file-name="Setting.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Setting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.481482">
-              <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
+            <state vertical-scroll-proportion="-15.074074">
+              <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1074#1223#0" expanded="true" />
-                <element signature="e#1222#1223#0" expanded="true" />
+                <element signature="e#1280#1429#0" expanded="true" />
+                <element signature="e#1428#1429#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,9 +113,9 @@
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/MyGame.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/TestScreen.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/LoadGameScreen.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/Setting.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/HomeScreen.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/LoadGameScreen.java" />
       </list>
     </option>
   </component>
@@ -474,35 +477,30 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#1844#2001#0" expanded="true" />
-            <element signature="e#2000#2001#0" expanded="true" />
-            <element signature="e#2038#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="e#2226#2377#0" expanded="true" />
-            <element signature="e#2376#2377#0" expanded="true" />
+            <element signature="e#1935#2092#0" expanded="true" />
+            <element signature="e#2091#2092#0" expanded="true" />
+            <element signature="e#2129#2283#0" expanded="true" />
+            <element signature="e#2282#2283#0" expanded="true" />
+            <element signature="e#2317#2463#0" expanded="true" />
+            <element signature="e#2462#2463#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Setting.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/MyGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.481482">
-          <caret line="40" column="26" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1074#1223#0" expanded="true" />
-            <element signature="e#1222#1223#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-13.851851">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.555555">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state vertical-scroll-proportion="-18.222221">
+          <caret line="31" column="56" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#854#1002#0" expanded="true" />
             <element signature="e#1001#1002#0" expanded="true" />
           </folding>
         </state>
@@ -510,32 +508,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/LoadGameScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4074073">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
-          <folding />
+        <state vertical-scroll-proportion="-16.333334">
+          <caret line="42" column="36" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1089#1238#0" expanded="true" />
+            <element signature="e#1237#1238#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Setting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.074074">
+          <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1280#1429#0" expanded="true" />
+            <element signature="e#1428#1429#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/HomeScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.518518">
-          <caret line="87" column="11" selection-start-line="87" selection-start-column="11" selection-end-line="87" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.31293303">
+          <caret line="65" column="38" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="38" />
           <folding>
-            <element signature="e#1844#2001#0" expanded="true" />
-            <element signature="e#2000#2001#0" expanded="true" />
-            <element signature="e#2038#2192#0" expanded="true" />
-            <element signature="e#2191#2192#0" expanded="true" />
-            <element signature="e#2226#2377#0" expanded="true" />
-            <element signature="e#2376#2377#0" expanded="true" />
+            <element signature="e#1935#2092#0" expanded="true" />
+            <element signature="e#2091#2092#0" expanded="true" />
+            <element signature="e#2129#2283#0" expanded="true" />
+            <element signature="e#2282#2283#0" expanded="true" />
+            <element signature="e#2317#2463#0" expanded="true" />
+            <element signature="e#2462#2463#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/MyGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43187067">
-          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
