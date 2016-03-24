@@ -19,18 +19,18 @@ public class MyGame extends Game.Default {
     super(UPDATE_RATE); // call update every 33ms (30 times per second)
   }
 
-  @Override
+
   public void init() {
 
         ss.push(new HomeScreen(ss));
   }
 
-  @Override
+
   public void update(int delta) {
       ss.update(delta);
   }
 
-  @Override
+
   public void paint(float alpha) {
     // the background automatically paints itself, so no need to do anything here!
     clock.paint(alpha);

@@ -16,14 +16,14 @@ import static playn.core.PlayN.*;
  */
 public class TestScreen extends Screen {
     private final ScreenStack ss;
-    private final ImageLayer bg;
+    private final ImageLayer bgLayer;
     private final ImageLayer backButton;
 
     public TestScreen(final ScreenStack ss) {
         this.ss = ss;
 
         Image bgImage = assets().getImage("images/bg.png");
-        this.bg = graphics().createImageLayer(bgImage);
+        this.bgLayer = graphics().createImageLayer(bgImage);
 
 
         Image backImage = assets().getImage("images/back.png");
@@ -31,7 +31,7 @@ public class TestScreen extends Screen {
         backButton.setTranslation(10 , 10);
 
         backButton.addListener(new Mouse.LayerAdapter(){
-            @Override
+
             public void onMouseUp(Mouse.ButtonEvent event) {
                 ss.remove(ss.top());
             }
@@ -39,10 +39,10 @@ public class TestScreen extends Screen {
 
     }
 
-    @Override
+
     public void wasShown() {
         super.wasShown();
-        this.layer.add(bg);
+        this.layer.add(bgLayer);
         this.layer.add(backButton);
     }
 }
