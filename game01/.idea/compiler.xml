@@ -17,12 +17,12 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
-      <profile default="false" name="Annotation profile for game01-java" enabled="true">
+      <profile default="false" name="Annotation profile for game01-assets" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="game01-java" />
+        <module name="game01-assets" />
       </profile>
       <profile default="false" name="Annotation profile for game01-core" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
@@ -31,12 +31,12 @@
         <processorPath useClasspath="true" />
         <module name="game01-core" />
       </profile>
-      <profile default="false" name="Annotation profile for game01-assets" enabled="true">
+      <profile default="false" name="Annotation profile for game01-java" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="game01-assets" />
+        <module name="game01-java" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
