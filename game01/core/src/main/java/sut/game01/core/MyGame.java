@@ -23,8 +23,6 @@ public class MyGame extends Game.Default {
   public void init() {
 
         ss.push(new HomeScreen(ss));
-
-
   }
 
   @Override
