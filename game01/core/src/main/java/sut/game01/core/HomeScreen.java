@@ -23,29 +23,29 @@ public class HomeScreen extends Screen {
 
 
     private final ScreenStack ss;
-    private final TestScreen testScreen;
+    private final GamePlay gamePlay;
+    private final Setting setting;
     private final ImageLayer bgLayer;
     private final ImageLayer logoLayer;
     private final ImageLayer newButton;
     private final ImageLayer loadLayer;
     private final ImageLayer settingLayer;
 
-   // private final ImageLayer g1Layer;
+
 
     private Root root;
 
     public HomeScreen(final ScreenStack ss){
         this.ss = ss;
-        this.testScreen = new TestScreen(ss);
+        this.gamePlay = new GamePlay(ss);
+        this.setting = new Setting(ss);
+
 
 
 
         Image bgImage = assets().getImage("images/bg.png");
         this.bgLayer = graphics().createImageLayer(bgImage);
 
-        //Image g1Image = assets().getImage("images/g1.png");
-        //this.g1Layer = graphics().createImageLayer(g1Image);
-        //g1Layer.setTranslation(400 , 0);
 
         Image logoImage = assets().getImage("images/logo.png");
         this.logoLayer = graphics().createImageLayer(logoImage);
@@ -68,10 +68,24 @@ public class HomeScreen extends Screen {
         ) {
 
             public void onMouseUp(Mouse.ButtonEvent event) {
-                ss.push(testScreen);
+                ss.push(gamePlay);
             }
         });
 
+        settingLayer.addListener(new Mouse.LayerAdapter()
+        {
+
+            public void onMouseUp(Mouse.ButtonEvent event) {
+                ss.push(setting);
+            }
+        });
+
+        loadLayer.addListener(new Mouse.LayerAdapter(){
+
+            public void onMouseUp(Mouse.ButtonEvent event) {
+                super.onMouseUp(event);
+            }
+        });
 
 
     }
@@ -82,7 +96,6 @@ public class HomeScreen extends Screen {
         super.wasShown();
 
         this.layer.add(bgLayer);
-        //this.layer.add(g1Layer);
         this.layer.add(logoLayer);
         this.layer.add(newButton);
         this.layer.add(loadLayer);
