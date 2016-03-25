@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="game01-core" />
+    <orderEntry type="module" module-name="game01-core" exported="" />
     <orderEntry type="library" name="Maven: com.googlecode.playn:playn-core:1.9" level="project" />
     <orderEntry type="library" name="Maven: com.samskivert:pythagoras:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: com.threerings:tripleplay:1.9" level="project" />

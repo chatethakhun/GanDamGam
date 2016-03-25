@@ -25,12 +25,13 @@ public class HomeScreen extends Screen {
     private final ScreenStack ss;
     private final GamePlay gamePlay;
     private final Setting setting;
-    private final LoadGameScreen loadGame;
+    private final GameOverScreen loadGame;
     private final ImageLayer bgLayer;
     private final ImageLayer logoLayer;
     private final ImageLayer newButton;
     private final ImageLayer loadLayer;
     private final ImageLayer settingLayer;
+
 
 
 
@@ -40,7 +41,7 @@ public class HomeScreen extends Screen {
         this.ss = ss;
         this.gamePlay = new GamePlay(ss);
         this.setting = new Setting(ss);
-        this.loadGame = new LoadGameScreen(ss);
+        this.loadGame = new GameOverScreen(ss);
 
 
 
@@ -52,6 +53,8 @@ public class HomeScreen extends Screen {
         Image logoImage = assets().getImage("images/logo.png");
         this.logoLayer = graphics().createImageLayer(logoImage);
         logoLayer.setTranslation(180 , 10);
+
+
 
         Image newImage = assets().getImage("images/button.png");
         this.newButton = graphics().createImageLayer(newImage);
@@ -65,11 +68,13 @@ public class HomeScreen extends Screen {
         this.settingLayer = graphics().createImageLayer(settingImage);
         settingLayer.setTranslation(20, 400);
 
+
+
         newButton.addListener(new Mouse.LayerAdapter(
 
         ) {
 
-            public void onMouseUp(Mouse.ButtonEvent event) {
+            public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(gamePlay);
             }
         });
@@ -77,14 +82,14 @@ public class HomeScreen extends Screen {
         settingLayer.addListener(new Mouse.LayerAdapter()
         {
 
-            public void onMouseUp(Mouse.ButtonEvent event) {
+            public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(setting);
             }
         });
 
         loadLayer.addListener(new Mouse.LayerAdapter(){
 
-            public void onMouseUp(Mouse.ButtonEvent event) {
+            public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(loadGame);
             }
         });
@@ -102,6 +107,7 @@ public class HomeScreen extends Screen {
         this.layer.add(newButton);
         this.layer.add(loadLayer);
         this.layer.add(settingLayer);
+
 
 
 
