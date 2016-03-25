@@ -32,7 +32,7 @@ public class LoadGameScreen extends Screen {
         this.backButton = graphics().createImageLayer(backImage);
         backButton.setTranslation(10 , 10);
 
-        Image titileImage = assets().getImage("images/b2.png");
+        Image titileImage = assets().getImage("images/load.png");
         this.titleLayer = graphics().createImageLayer(titileImage);
         titleLayer.setTranslation(250 ,100 );
 
