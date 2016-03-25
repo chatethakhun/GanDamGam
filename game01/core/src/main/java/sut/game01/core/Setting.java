@@ -42,7 +42,7 @@ public class Setting extends Screen {
 
         backButton.addListener(new Mouse.LayerAdapter() {
 
-            public void onMouseUp(Mouse.ButtonEvent event) {
+            public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.remove(ss.top());
             }
         });
