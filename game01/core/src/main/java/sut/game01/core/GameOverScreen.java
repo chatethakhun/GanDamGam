@@ -20,7 +20,7 @@ public class GameOverScreen extends Screen {
     private final ImageLayer retryLayer;
     private final ImageLayer mainLayer;
     private final ImageLayer mapLayer;
-
+    private int i;
 
     public GameOverScreen(final ScreenStack ss) {
         this.ss = ss;
@@ -49,7 +49,9 @@ public class GameOverScreen extends Screen {
         mainLayer.addListener(new Mouse.LayerAdapter(){
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
-                ss.remove(ss.top());
+                for (i = 0; i < ss.size(); i++){
+                    ss.remove(ss.top());
+                }
             }
         });
 
