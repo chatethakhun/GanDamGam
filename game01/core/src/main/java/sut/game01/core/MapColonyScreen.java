@@ -75,6 +75,7 @@ public class MapColonyScreen extends Screen {
         mainLayer.addListener(new Mouse.LayerAdapter() {
             @Override
             public void onMouseUp(Mouse.ButtonEvent event) {
+
                 for (i = 0; i <= ss.size(); i++){
                     ss.remove(ss.top());
                 }

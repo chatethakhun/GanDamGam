@@ -15,10 +15,11 @@ import static playn.core.PlayN.graphics;
 public class Setting extends Screen {
 
     private final  ScreenStack ss;
-    private final ImageLayer bgLayer;;
+    private final ImageLayer bgLayer;
     private final ImageLayer backButton;
     private final ImageLayer titleLayer;
     private final ImageLayer sound;
+
 
     public Setting(final ScreenStack ss) {
         this.ss = ss;
@@ -43,7 +44,9 @@ public class Setting extends Screen {
         backButton.addListener(new Mouse.LayerAdapter() {
 
             public void onMouseDown(Mouse.ButtonEvent event) {
-                ss.remove(ss.top());
+                for (int i = 0; i < ss.size(); i++){
+                    ss.remove(ss.top());
+                }
             }
         });
 
