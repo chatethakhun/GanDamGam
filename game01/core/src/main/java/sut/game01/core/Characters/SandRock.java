@@ -38,12 +38,12 @@ public class SandRock {
                     if(spriteIndex == 20){
                         state = State.IDLE;
                     }
+                    
                     break;
             }
             spriteIndex = offset + ((spriteIndex + 1) % 7);
             sprite.setSprite(spriteIndex);
             e = 0;
-            System.out.println(spriteIndex);
         }
     }
 
