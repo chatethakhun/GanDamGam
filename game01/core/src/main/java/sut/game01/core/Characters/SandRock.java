@@ -1,10 +1,15 @@
 package sut.game01.core.Characters;
 
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.*;
 import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Layer;
 import playn.core.PlayN;
 import playn.core.util.Callback;
+import playn.core.util.Clock;
+import sut.game01.core.GamePlay;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 
@@ -16,10 +21,14 @@ public class SandRock {
     private Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
+    private Body body;
 
     public void update(int delta) {
 
         if(hasLoaded == false) return;
+        sprite.layer().setTranslation(
+                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
+                body.getPosition().y / GamePlay.M_PER_PIXEL);
 
          e += delta;
 
@@ -51,6 +60,14 @@ public class SandRock {
         return sprite.layer();
     }
 
+    public void paint(Clock clock) {
+        if(hasLoaded == false)return;
+        sprite.layer().setTranslation(
+                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
+                body.getPosition().y / GamePlay.M_PER_PIXEL
+        );
+    }
+
     public enum State {
         ATTK,IDLE,HURT
     };
@@ -61,7 +78,7 @@ public class SandRock {
     private int offset = 14;
 
 
-    public SandRock(final float x, final  float y) {
+    public SandRock(final World world, final float x, final float y) {
 
         PlayN.keyboard().setListener(new Keyboard.Listener() {
             @Override
@@ -96,6 +113,10 @@ public class SandRock {
                 sprite.layer().setOrigin(sprite.width() / 2f,
                         sprite.height() / 2f);
                 sprite.layer().setTranslation(x, y + 13f);
+                body = initPhysicsBody(world,
+                        GamePlay.M_PER_PIXEL * x,
+                        GamePlay.M_PER_PIXEL * y);
+
                 hasLoaded = true;
             }
 
@@ -106,5 +127,26 @@ public class SandRock {
         });
     }
 
+    private Body initPhysicsBody(World world, float x, float y) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyType.DYNAMIC;
+        bodyDef.position = new Vec2(0,0);
+        Body body = world.createBody(bodyDef);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(sprite.layer().width() * GamePlay.M_PER_PIXEL/2 ,
+                sprite.layer().height()* GamePlay.M_PER_PIXEL /2);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 0.4f;
+        //fixtureDef.friction = 0.1f;
+        //fixtureDef.restitution = 1f;
+        body.createFixture(fixtureDef);
+
+        body.setLinearDamping(0.2f);
+        body.setTransform(new Vec2(x,y), 0f);
+        return body;
+    }
 
 }
