@@ -14,10 +14,8 @@ import tripleplay.game.ScreenStack;
 
 import java.util.ArrayList;
 
+import static playn.core.PlayN.*;
 
-import static playn.core.PlayN.assets;
-import static playn.core.PlayN.graphics;
-import static playn.core.PlayN.mouse;
 
 /**
  * Created by Chatethakhun on 24/3/2559.
@@ -35,7 +33,7 @@ public class GamePlay extends Screen {
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
-    private int i=0,j=0;
+    private int i=0,j=0,check = 0;
 
     public GamePlay(final ScreenStack ss) {
         this.ss = ss;
@@ -46,16 +44,38 @@ public class GamePlay extends Screen {
 
         Image backImage = assets().getImage("images/main.png");
         this.backButton = graphics().createImageLayer(backImage);
-        backButton.setTranslation(10 , 10);
+        backButton.setTranslation(10, 10);
 
-        backButton.addListener(new Mouse.LayerAdapter(){
 
-            public void onMouseDown(Mouse.ButtonEvent event) {
-                for (p = 0; p < ss.size(); p++){
+        keyboard().setListener(new Keyboard.Listener() {
+            @Override
+            public void onKeyDown(Keyboard.Event event) {
+                if(event.key() == Key.ESCAPE){
+                for (p = 0; p < ss.size(); p++) {
                     ss.remove(ss.top());
-                }
+                    System.out.println(check);
+                    check = 1;
+                    }
+                }else if (event.key() == Key.SPACE) {
+                        switch (SandRock.state) {
+                            case IDLE: SandRock.state = SandRock.State.ATTK;
+                        }
+                    }
+
+
+            }
+
+            @Override
+            public void onKeyTyped(Keyboard.TypedEvent typedEvent) {
+
+            }
+
+            @Override
+            public void onKeyUp(Keyboard.Event event) {
+
             }
         });
+
 
 
         Vec2 gravity = new Vec2(0.0f, 10.0f);
@@ -65,34 +85,34 @@ public class GamePlay extends Screen {
 
 
 
-    }
 
+    }
 
     public void wasShown() {
         super.wasShown();
         this.layer.add(bgLayer);
-        this.layer.add(backButton);
-        sandRock.add(i,new SandRock(world,350f,0f));
+        //this.layer.add(backButton);
+        sandRock.add(new SandRock(world, 100, 100f));
 
-
-        /*mouse().setListener(new Mouse.Adapter() {
-            @Override
-            public void onMouseDown(Mouse.ButtonEvent event) {
-                sandRock.add(i,new SandRock(world,event.x(),event.y()));
-                layer.add(sandRock.get(i).layer());
-                i++;
-                j++;
-            }
-
-        });
-*/
 
 
         Body ground = world.createBody(new BodyDef());
         EdgeShape groundShape = new EdgeShape();
-        groundShape.set(new Vec2( 5, height ), new Vec2(width, height));
+        groundShape.set(new Vec2(0, 9), new Vec2(width, 9));//set(new Vec2(่ำแหน่ง), new Vec2(ตขนาด))
         ground.createFixture(groundShape, 0.0f);
-        layer.add(sandRock.get(j).layer());
+        this.layer.add(sandRock.get(i).layer());
+        System.out.println(check);
+        if(check == 1) {
+
+            layer.remove(sandRock.get(i).layer());
+            System.out.print("FOUND!!!!");
+            check = 0;
+            //this.layer.remove();
+            //graphics().d
+            //this.layer.remove(sandRock.get(0).layer());
+            //this.layer.remove(sandRock.get(0).layer());
+
+        }
 
         if (showDebugDraw) {
             CanvasImage image = graphics().createImage((int) (width / GamePlay.M_PER_PIXEL),
@@ -109,12 +129,23 @@ public class GamePlay extends Screen {
                     DebugDraw.e_aabbBit);
             debugDraw.setCamera(0, 0, 1f / GamePlay.M_PER_PIXEL);
             world.setDebugDraw(debugDraw);
-
-
         }
 
-    }
 
+        /*mouse().setListener(new Mouse.Adapter() {
+            @Override
+            public void onMouseDown(Mouse.ButtonEvent event) {
+                sandRock.add(i,new SandRock(world,event.x(),event.y()));
+                layer.add(sandRock.get(i).layer());
+                i++;
+                j++;
+            }
+
+        });
+*/
+
+
+    }
     @Override
     public void update(int delta) {
         super.update(delta);

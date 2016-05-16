@@ -35,6 +35,7 @@ public class HomeScreen extends Screen {
 
 
 
+
     private Root root;
 
     public HomeScreen(final ScreenStack ss){
@@ -76,6 +77,8 @@ public class HomeScreen extends Screen {
 
             public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(gamePlay);
+
+
             }
         });
 

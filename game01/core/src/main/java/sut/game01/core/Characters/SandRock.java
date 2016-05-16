@@ -38,15 +38,15 @@ public class SandRock {
                 case IDLE: offset = 7;break;
                 case ATTK: offset = 0;
                     if(spriteIndex == 6) {
-                        state = State.HURT;
+                       state = State.IDLE;
                     }
                         break;
 
 
                 case HURT: offset = 14;
-                    if(spriteIndex == 20){
-                        state = State.IDLE;
-                    }
+                    //if(spriteIndex == 20){
+                    //    state = State.IDLE;
+                    //}
                     
                     break;
             }
@@ -72,15 +72,15 @@ public class SandRock {
         ATTK,IDLE,HURT
     };
 
-    private State state = State.IDLE;
+    public static State state = State.IDLE;
 
     private int e = 0;
-    private int offset = 14;
+    private int offset = 7;
 
 
     public SandRock(final World world, final float x, final float y) {
 
-        PlayN.keyboard().setListener(new Keyboard.Listener() {
+        /*PlayN.keyboard().setListener(new Keyboard.Listener() {
             @Override
             public void onKeyDown(Keyboard.Event event) {
 
@@ -96,15 +96,14 @@ public class SandRock {
 
                 if(event.key() == Key.SPACE) {
                     switch (state) {
-                        case IDLE: state = State.ATTK;break;
-                        case ATTK: state = State.HURT;break;
-
+                        case IDLE: state = State.ATTK;
+                            break;
                     }
                 }
 
             }
         });
-
+*/
         sprite = SpriteLoader.getSprite("images/Characters/SandRock/SandRock.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
