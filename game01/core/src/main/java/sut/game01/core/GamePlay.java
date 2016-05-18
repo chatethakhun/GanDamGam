@@ -24,9 +24,12 @@ public class GamePlay extends Screen {
     // Level
     private final ScreenStack ss;
     private final ImageLayer bgLayer;
-    private final ImageLayer backButton;
+    //private final ImageLayer gunLayer;
+    private final ImageLayer tableLayer;
     private int p;
     private ArrayList<SandRock> sandRock = new ArrayList<SandRock>();
+    //private ArrayList<Image> gunImage = new ArrayList<Image>();
+    private ArrayList<ImageLayer> gunLayer = new ArrayList<ImageLayer>();
     private boolean showDebugDraw = true;
     private World world;
     private DebugDrawBox2D debugDraw;
@@ -41,10 +44,15 @@ public class GamePlay extends Screen {
         Image bgImage = assets().getImage("images/bg.png");
         this.bgLayer = graphics().createImageLayer(bgImage);
 
+        Image gunImage = assets().getImage("images/Gun/gun.png");
+        gunLayer.add(graphics().createImageLayer(gunImage));
+        //Image gunImage = assets().getImage("images/Gun/gun.png");
+        //this.gunLayer = graphics().createImageLayer(gunImage);
+        //gunLayer.setTranslation(185, 130);
 
-        Image backImage = assets().getImage("images/main.png");
-        this.backButton = graphics().createImageLayer(backImage);
-        backButton.setTranslation(10, 10);
+        Image tableImage = assets().getImage("images/Table/Table.png");
+        this.tableLayer = graphics().createImageLayer(tableImage);
+        tableLayer.setTranslation(170,120);
 
 
         keyboard().setListener(new Keyboard.Listener() {
@@ -91,10 +99,12 @@ public class GamePlay extends Screen {
     public void wasShown() {
         super.wasShown();
         this.layer.add(bgLayer);
-        //this.layer.add(backButton);
+        this.layer.add(tableLayer);
+
+            this.layer.add(gunLayer.get(i));
+
+
         sandRock.add(new SandRock(world, 100, 100f));
-
-
 
         Body ground = world.createBody(new BodyDef());
         EdgeShape groundShape = new EdgeShape();
@@ -128,7 +138,7 @@ public class GamePlay extends Screen {
                     DebugDraw.e_jointBit |
                     DebugDraw.e_aabbBit);
             debugDraw.setCamera(0, 0, 1f / GamePlay.M_PER_PIXEL);
-            world.setDebugDraw(debugDraw);
+            //world.setDebugDraw(debugDraw);
         }
 
 
