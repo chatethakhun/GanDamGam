@@ -21,7 +21,7 @@ public class SandRock {
     private Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
-    private Body body;
+    public static Body body;
 
     public void update(int delta) {
 
@@ -33,7 +33,7 @@ public class SandRock {
          e += delta;
 
 
-        if(e > 200) {
+        if(e > 100) {
             switch (state) {
                 case IDLE: offset = 7;break;
                 case ATTK: offset = 0;
@@ -80,30 +80,6 @@ public class SandRock {
 
     public SandRock(final World world, final float x, final float y) {
 
-        /*PlayN.keyboard().setListener(new Keyboard.Listener() {
-            @Override
-            public void onKeyDown(Keyboard.Event event) {
-
-            }
-
-            @Override
-            public void onKeyTyped(Keyboard.TypedEvent typedEvent) {
-
-            }
-
-            @Override
-            public void onKeyUp(Keyboard.Event event) {
-
-                if(event.key() == Key.SPACE) {
-                    switch (state) {
-                        case IDLE: state = State.ATTK;
-                            break;
-                    }
-                }
-
-            }
-        });
-*/
         sprite = SpriteLoader.getSprite("images/Characters/SandRock/SandRock.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
