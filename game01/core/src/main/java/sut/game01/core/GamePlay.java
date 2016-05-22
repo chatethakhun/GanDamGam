@@ -38,13 +38,17 @@ public class GamePlay extends Screen {
     private final ImageLayer tableLayer;
     private int p;
     private ArrayList<SandRock> sandRock = new ArrayList<SandRock>();
-    private boolean showDebugDraw = true;
+    private boolean showDebugDraw = true,checkMatrix = false;
     private World world;
     private DebugDrawBox2D debugDraw;
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
     private int i=0,j=0,g=0,check = 0;
+    int [][]matrix = new int[4][4];
+
+
+
 
 
     ArrayList<Gun> test = new ArrayList<Gun>();
@@ -67,7 +71,7 @@ public class GamePlay extends Screen {
 
         Image tableImage = assets().getImage("images/Table/Table.png");
         this.tableLayer = graphics().createImageLayer(tableImage);
-        tableLayer.setTranslation(170,120);
+        tableLayer.setTranslation(175,100);
 
 
 
@@ -77,87 +81,20 @@ public class GamePlay extends Screen {
         world.setAutoClearForces(true);
 
         sandRock.add(0,new SandRock(world, 100, 100f));
-        test.add(0,new Gun(world,230f,230f));
-        test.add(1,new Gun(world,400f,230f));
 
         starBeams.add(0,new StarBeam(world,150,100f));
 
 
-        world.setContactListener(new ContactListener() {
-            @Override
-            public void beginContact(final Contact contact) {
-                debugString = "Shenlong HP: = " + shenlongHP;
-                if(contact.getFixtureA().getBody() == Shenlong.body || contact.getFixtureB().getBody() == Shenlong.body) {
-                    shenlongHP -= 3;
-                }
-
-                keyboard().setListener(new Keyboard.Listener() {
-                    @Override
-                    public void onKeyDown(Keyboard.Event event) {
-
-                        if(event.key() == Key.ESCAPE){
-                            for (p = 0; p < ss.size(); p++) {
-                                ss.remove(ss.top());
-                                System.out.println(check);
-                                check = 1;
-                            }
-                        }else if (event.key() == Key.SPACE) {
-
-                            switch (SandRock.state) {
-                                case IDLE: SandRock.state = SandRock.State.ATTK;
-                                    SandRock.body.applyForce(new Vec2(200f,-600f),SandRock.body.getPosition());
-
-                                    StarBeam.body.applyLinearImpulse(new Vec2(200f,0f), StarBeam.body.getPosition());
-
-
-
-
-
-
-                            }
-
-                        }else if(event.key() == Key.RIGHT){
-                            SandRock.body.applyForce(new Vec2(200f,0f),SandRock.body.getPosition());
-                        }
-
-
-
-                    }
-
-                    @Override
-                    public void onKeyTyped(Keyboard.TypedEvent typedEvent) {
-
-                    }
-
-                    @Override
-                    public void onKeyUp(Keyboard.Event event) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold manifold) {
-
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
-
-            }
-        });
     }
 
     public void wasShown() {
         super.wasShown();
         this.layer.add(bgLayer);
         this.layer.add(tableLayer);
+
+
+
+
 
 
         shenlong = new Shenlong(world,600,100f);
@@ -177,7 +114,7 @@ public class GamePlay extends Screen {
 
         j++;
         i++;
-        System.out.println(check);
+
 
 
 
@@ -202,10 +139,6 @@ public class GamePlay extends Screen {
 
 
 
-
-
-    this.layer.add(test.get(0).layer());
-    this.layer.add(test.get(1).layer());
     this.layer.add(starBeams.get(0).layer());
 
 
@@ -222,6 +155,48 @@ public class GamePlay extends Screen {
         }
 
         shenlong.update(delta);
+
+        mouse().setListener(new Mouse.Adapter(){
+
+            @Override
+            public void onMouseDown(Mouse.ButtonEvent event) {
+
+
+                for (int i = 0; i < matrix.length; i++) {
+                    for (int j = 0; j < matrix[ i ].length; j++)
+                    {
+                        if(event.x() > 175 && event.x() < 250){
+                            matrix[0][0] = 1;
+                        } else if(event.x() > 250 && event.x() < 325) {
+                            matrix[0][1] = 1;
+
+
+                        } else if(event.x() > 325 && event.x() < 400){
+                            matrix[0][2] = 1;
+                            check = check + 1;
+                            checkMatrix = true;
+                            SandRock.state = SandRock.State.ATTK;
+                            StarBeam.body.applyLinearImpulse(new Vec2(200f,0f), StarBeam.body.getPosition());
+                        } else if(event.x() >400 && event.x() < 475){
+                            matrix[0][3] = 1;
+                        }
+                            System.out.print(matrix[ i ][ j ] + " ");
+                        }
+                    if(checkMatrix = true){
+
+                        matrix = new int[4][4];
+                        checkMatrix = false;
+                    }
+                    System.out.println();
+
+                }
+
+
+                System.out.println(check/16);
+                System.out.println("=====================================");
+            }
+        });
+
 
     }
 
