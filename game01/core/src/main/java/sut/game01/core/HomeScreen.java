@@ -1,9 +1,6 @@
 package sut.game01.core;
 
-import playn.core.Font;
-import playn.core.Image;
-import playn.core.ImageLayer;
-import playn.core.Mouse;
+import playn.core.*;
 import react.UnitSlot;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
@@ -14,6 +11,7 @@ import tripleplay.ui.layout.AxisLayout;
 
 import static playn.core.PlayN.assets;
 import static playn.core.PlayN.graphics;
+import static playn.core.PlayN.keyboard;
 
 /**
  * Created by Administrator on 23/3/2559.
@@ -71,13 +69,21 @@ public class HomeScreen extends Screen {
 
 
 
-        newButton.addListener(new Mouse.LayerAdapter(
+        keyboard().setListener(new Keyboard.Listener() {
+            @Override
+            public void onKeyDown(Keyboard.Event event) {
+                if(event.key() == Key.ENTER) {
+                    ss.push(gamePlay);
+                }
+            }
 
-        ) {
+            @Override
+            public void onKeyTyped(Keyboard.TypedEvent typedEvent) {
 
-            public void onMouseDown(Mouse.ButtonEvent event) {
-                ss.push(gamePlay);
+            }
 
+            @Override
+            public void onKeyUp(Keyboard.Event event) {
 
             }
         });
