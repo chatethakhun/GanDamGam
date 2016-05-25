@@ -51,6 +51,8 @@ public class GamePlay extends Screen {
 
 
 
+
+
     ArrayList<Gun> test = new ArrayList<Gun>();
     Shenlong shenlong;
     ArrayList<StarBeam> starBeams = new ArrayList<StarBeam>();
@@ -165,26 +167,69 @@ public class GamePlay extends Screen {
                 for (int i = 0; i < matrix.length; i++) {
                     for (int j = 0; j < matrix[ i ].length; j++)
                     {
-                        if(event.x() > 175 && event.x() < 250){
+                        if(event.x() >175 && event.x() < 250 && event.y() > 100 && event.y() < 175){
                             matrix[0][0] = 1;
-                        } else if(event.x() > 250 && event.x() < 325) {
-                            matrix[0][1] = 1;
-
-
-                        } else if(event.x() > 325 && event.x() < 400){
-                            matrix[0][2] = 1;
-                            check = check + 1;
                             checkMatrix = true;
-                            SandRock.state = SandRock.State.ATTK;
-                            StarBeam.body.applyLinearImpulse(new Vec2(200f,0f), StarBeam.body.getPosition());
-                        } else if(event.x() >400 && event.x() < 475){
+                        }else if(event.x() >250 && event.x() < 325 && event.y() > 100 && event.y() < 175){
+                            matrix[0][1] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >325 && event.x() < 400 && event.y() > 100 && event.y() < 175){
+                            matrix[0][2] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >400 && event.x() < 475 && event.y() > 100 && event.y() < 175){
                             matrix[0][3] = 1;
+                            checkMatrix = true;
+                        }
+
+                        //======================================================================================
+                        else if(event.x() >175 && event.x() < 250 && event.y() > 175 && event.y() < 250){
+                            matrix[1][0] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >250 && event.x() < 325 && event.y() > 175 && event.y() < 250){
+                            matrix[1][1] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >325 && event.x() < 400 && event.y() > 175 && event.y() < 250){
+                            matrix[1][2] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >400 && event.x() < 475 && event.y() > 175 && event.y() < 250){
+                            matrix[1][3] = 1;
+                            checkMatrix = true;
+                        }
+
+                        //=======================================================================================
+                        else if(event.x() >175 && event.x() < 250 && event.y() > 250 && event.y() < 325){
+                            matrix[2][0] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >250 && event.x() < 325 && event.y() > 250 && event.y() < 325){
+                            matrix[2][1] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >325 && event.x() < 400 && event.y() > 250 && event.y() < 325){
+                            matrix[2][2] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >400 && event.x() < 475 && event.y() > 250 && event.y() < 325){
+                            matrix[2][3] = 1;
+                            checkMatrix = true;
+                        }
+
+                        //======================================================================================
+                        else if(event.x() >175 && event.x() < 250 && event.y() > 325 && event.y() < 400){
+                            matrix[3][0] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >250 && event.x() < 325 && event.y() > 325 && event.y() < 400){
+                            matrix[3][1] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >325 && event.x() < 400 && event.y() > 325 && event.y() < 400){
+                            matrix[3][2] = 1;
+                            checkMatrix = true;
+                        }else if(event.x() >400 && event.x() < 475 && event.y() > 325 && event.y() < 400){
+                            matrix[3][3] = 1;
+                            checkMatrix = true;
                         }
                             System.out.print(matrix[ i ][ j ] + " ");
                         }
                     if(checkMatrix = true){
 
-                        matrix = new int[4][4];
+                        //matrix = new int[4][4];
                         checkMatrix = false;
                     }
                     System.out.println();
