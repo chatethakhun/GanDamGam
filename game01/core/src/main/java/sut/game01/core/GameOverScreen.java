@@ -63,10 +63,7 @@ public class GameOverScreen extends Screen {
         });
 
 
-
-
-
-
+        
 
     }
 
