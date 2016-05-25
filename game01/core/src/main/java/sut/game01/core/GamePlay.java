@@ -173,9 +173,14 @@ public class GamePlay extends Screen {
 
         shenlong.update(delta);
 
+
+
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(final Contact contact) {
+
+
+
                 mouse().setListener(new Mouse.Adapter(){
 
                     @Override
@@ -253,7 +258,13 @@ public class GamePlay extends Screen {
                                 Shenlong.state = Shenlong.State.HURT;
                                 StarBeam.layer().destroy();
                                 //world.destroyBody(StarBeam.body);
+
                                 clearMatrix();
+                                shenlongHP = shenlongHP - 3;
+                                debugString = "HP Shenlong = " + shenlongHP;
+                                System.out.println("HP = " + shenlongHP);
+
+
 
                             }
                         }
@@ -319,7 +330,7 @@ public class GamePlay extends Screen {
            debugDraw.getCanvas().clear();
            world.drawDebugData();
             debugDraw.getCanvas().setFillColor(Color.rgb(255,255,255));
-            debugDraw.getCanvas().drawText(debugString,100,100);
+            debugDraw.getCanvas().drawText(debugString,100,500);
         }
     }
 
