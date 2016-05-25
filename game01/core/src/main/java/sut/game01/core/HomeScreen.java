@@ -69,22 +69,10 @@ public class HomeScreen extends Screen {
 
 
 
-        keyboard().setListener(new Keyboard.Listener() {
+        newButton.addListener(new Mouse.LayerAdapter(){
             @Override
-            public void onKeyDown(Keyboard.Event event) {
-                if(event.key() == Key.ENTER) {
-                    ss.push(gamePlay);
-                }
-            }
-
-            @Override
-            public void onKeyTyped(Keyboard.TypedEvent typedEvent) {
-
-            }
-
-            @Override
-            public void onKeyUp(Keyboard.Event event) {
-
+            public void onMouseDown(Mouse.ButtonEvent event) {
+                ss.push(gamePlay);
             }
         });
 
