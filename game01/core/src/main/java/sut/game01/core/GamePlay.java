@@ -39,13 +39,13 @@ public class GamePlay extends Screen {
     private int p;
     private ArrayList<SandRock> sandRock = new ArrayList<SandRock>();
     private boolean showDebugDraw = true,checkMatrix = false;
-    private World world;
+    public static World world;
     private DebugDrawBox2D debugDraw;
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
     private int i=0,j=0,g=0,check = 0;
-    int [][]matrix = new int[4][4];
+    public static  int [][]matrix = new int[4][4];
 
 
 
@@ -99,7 +99,7 @@ public class GamePlay extends Screen {
 
 
 
-        shenlong = new Shenlong(world,600,100f);
+        shenlong = new Shenlong(world,550f,400f);
         this.layer.add(shenlong.layer());
 
 
@@ -109,7 +109,22 @@ public class GamePlay extends Screen {
         EdgeShape groundShape = new EdgeShape();
         groundShape.set(new Vec2(0, 15), new Vec2(width, 15));//set(new Vec2(???????), new Vec2(?????))
         ground.createFixture(groundShape, 0.0f);
+
+        Body groundL = world.createBody(new BodyDef());
+        EdgeShape groundShapeL = new EdgeShape();
+        groundShapeL.set(new Vec2(0, 0), new Vec2(0, height));
+        groundL.createFixture(groundShapeL, 0.0f);
+
+
+        Body groundR = world.createBody(new BodyDef());
+        EdgeShape groundShapeR = new EdgeShape();
+        groundShapeR.set(new Vec2(width, 0), new Vec2(width, height));
+        groundR.createFixture(groundShapeR, 0.0f);
+
+
         this.layer.add(sandRock.get(i).layer());
+
+
 
 
 
@@ -136,7 +151,7 @@ public class GamePlay extends Screen {
                     DebugDraw.e_jointBit |
                     DebugDraw.e_aabbBit);
             debugDraw.setCamera(0, 0, 1f / GamePlay.M_PER_PIXEL);
-            //world.setDebugDraw(debugDraw);
+            world.setDebugDraw(debugDraw);
         }
 
 
@@ -158,91 +173,124 @@ public class GamePlay extends Screen {
 
         shenlong.update(delta);
 
-        mouse().setListener(new Mouse.Adapter(){
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(final Contact contact) {
+                mouse().setListener(new Mouse.Adapter(){
+
+                    @Override
+                    public void onMouseDown(Mouse.ButtonEvent event) {
+
+
+                        for (int i = 0; i < matrix.length; i++) {
+                            for (int j = 0; j < matrix[i].length; j++) {
+                                if (event.x() > 175 && event.x() < 250 && event.y() > 100 && event.y() < 175) {
+                                    matrix[0][0] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 100 && event.y() < 175) {
+                                    matrix[0][1] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 100 && event.y() < 175) {
+                                    matrix[0][2] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 100 && event.y() < 175) {
+                                    matrix[0][3] = 1;
+                                    checkMatrix = true;
+                                }
+
+                                //======================================================================================
+                                else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
+                                    matrix[1][0] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
+                                    matrix[1][1] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 175 && event.y() < 250) {
+                                    matrix[1][2] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 175 && event.y() < 250) {
+                                    matrix[1][3] = 1;
+                                    checkMatrix = true;
+                                }
+
+                                //=======================================================================================
+                                else if (event.x() > 175 && event.x() < 250 && event.y() > 250 && event.y() < 325) {
+                                    matrix[2][0] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 250 && event.y() < 325) {
+                                    matrix[2][1] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 250 && event.y() < 325) {
+                                    matrix[2][2] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 250 && event.y() < 325) {
+                                    matrix[2][3] = 1;
+                                    checkMatrix = true;
+                                }
+
+                                //======================================================================================
+                                else if (event.x() > 175 && event.x() < 250 && event.y() > 325 && event.y() < 400) {
+                                    matrix[3][0] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 325 && event.y() < 400) {
+                                    matrix[3][1] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 325 && event.y() < 400) {
+                                    matrix[3][2] = 1;
+                                    checkMatrix = true;
+                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 325 && event.y() < 400) {
+                                    matrix[3][3] = 1;
+                                    checkMatrix = true;
+                                }
+                                System.out.print(matrix[i][j] + " ");
+                            }
+                            System.out.println();
+                        }
+
+                        if(matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2]  == 1) {
+                            StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
+                            if(contact.getFixtureA().getBody() == StarBeam.body || contact.getFixtureB().getBody() == StarBeam.body) {
+                                Shenlong.state = Shenlong.State.HURT;
+                                StarBeam.layer().destroy();
+                                //world.destroyBody(StarBeam.body);
+                                clearMatrix();
+
+                            }
+                        }
+
+
+                        System.out.println(check/16);
+                        System.out.println("=====================================");
+
+
+                    }
+                }
+                );
+            }
+
 
             @Override
-            public void onMouseDown(Mouse.ButtonEvent event) {
+            public void endContact(Contact contact) {
 
-
-                for (int i = 0; i < matrix.length; i++) {
-                    for (int j = 0; j < matrix[ i ].length; j++)
-                    {
-                        if(event.x() >175 && event.x() < 250 && event.y() > 100 && event.y() < 175){
-                            matrix[0][0] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >250 && event.x() < 325 && event.y() > 100 && event.y() < 175){
-                            matrix[0][1] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >325 && event.x() < 400 && event.y() > 100 && event.y() < 175){
-                            matrix[0][2] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >400 && event.x() < 475 && event.y() > 100 && event.y() < 175){
-                            matrix[0][3] = 1;
-                            checkMatrix = true;
-                        }
-
-                        //======================================================================================
-                        else if(event.x() >175 && event.x() < 250 && event.y() > 175 && event.y() < 250){
-                            matrix[1][0] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >250 && event.x() < 325 && event.y() > 175 && event.y() < 250){
-                            matrix[1][1] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >325 && event.x() < 400 && event.y() > 175 && event.y() < 250){
-                            matrix[1][2] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >400 && event.x() < 475 && event.y() > 175 && event.y() < 250){
-                            matrix[1][3] = 1;
-                            checkMatrix = true;
-                        }
-
-                        //=======================================================================================
-                        else if(event.x() >175 && event.x() < 250 && event.y() > 250 && event.y() < 325){
-                            matrix[2][0] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >250 && event.x() < 325 && event.y() > 250 && event.y() < 325){
-                            matrix[2][1] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >325 && event.x() < 400 && event.y() > 250 && event.y() < 325){
-                            matrix[2][2] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >400 && event.x() < 475 && event.y() > 250 && event.y() < 325){
-                            matrix[2][3] = 1;
-                            checkMatrix = true;
-                        }
-
-                        //======================================================================================
-                        else if(event.x() >175 && event.x() < 250 && event.y() > 325 && event.y() < 400){
-                            matrix[3][0] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >250 && event.x() < 325 && event.y() > 325 && event.y() < 400){
-                            matrix[3][1] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >325 && event.x() < 400 && event.y() > 325 && event.y() < 400){
-                            matrix[3][2] = 1;
-                            checkMatrix = true;
-                        }else if(event.x() >400 && event.x() < 475 && event.y() > 325 && event.y() < 400){
-                            matrix[3][3] = 1;
-                            checkMatrix = true;
-                        }
-                            System.out.print(matrix[ i ][ j ] + " ");
-                        }
-                    if(checkMatrix = true){
-
-                        //matrix = new int[4][4];
-                        checkMatrix = false;
-                    }
-                    System.out.println();
-
-                }
-
-
-                System.out.println(check/16);
-                System.out.println("=====================================");
             }
-        });
+
+            @Override
+            public void preSolve(Contact contact, Manifold manifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+            }}
+            );
 
 
+    }
+
+
+    public void clearMatrix() {
+        matrix = new int[4][4];
     }
 
 

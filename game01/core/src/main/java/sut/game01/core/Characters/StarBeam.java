@@ -15,7 +15,7 @@ import sut.game01.core.sprite.SpriteLoader;
  * Created by Chatethakhun on 19/5/2559.
  */
 public class StarBeam {
-    private Sprite sprite;
+    private static Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
     public static Body body;
@@ -32,9 +32,10 @@ public class StarBeam {
             sprite.setSprite(spriteIndex);
             e = 0;
 
+
     }
 
-    public Layer layer() {
+    public static Layer layer() {
         return sprite.layer();
     }
 

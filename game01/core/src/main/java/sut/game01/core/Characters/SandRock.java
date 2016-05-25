@@ -1,8 +1,12 @@
 package sut.game01.core.Characters;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.Key;
 import playn.core.Keyboard;
 import playn.core.Layer;
@@ -53,6 +57,10 @@ public class SandRock {
             spriteIndex = offset + ((spriteIndex + 1) % 7);
             sprite.setSprite(spriteIndex);
             e = 0;
+
+
+
+
         }
     }
 

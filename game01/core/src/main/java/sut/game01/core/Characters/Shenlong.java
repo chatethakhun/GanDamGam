@@ -16,7 +16,7 @@ import sut.game01.core.sprite.SpriteLoader;
  */
 public class Shenlong {
 
-    private Sprite sprite;
+    private static Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
     public static Body body;
@@ -45,7 +45,7 @@ public class Shenlong {
     }
 
 
-    public Layer layer() {
+    public static  Layer layer() {
         return sprite.layer();
     }
 
