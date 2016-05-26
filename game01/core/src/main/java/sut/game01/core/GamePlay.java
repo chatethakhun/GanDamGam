@@ -50,6 +50,7 @@ public class GamePlay extends Screen {
     int shenlongHP = 10;
     int sandRockHP = 10;
     MapSpaceScreen mapSpaceScreen;
+    Boolean checkContact = false;
 
 
 
@@ -77,7 +78,11 @@ public class GamePlay extends Screen {
 
         sandRock.add(0,new SandRock(world, 50, 400f));
 
-        starBeams.add(0,new StarBeam(world,100,400f));
+       for(int num = 0; num < 1; num ++) {
+
+            starBeams.add(new StarBeam(world,100,400f));
+
+        }
 
 
 
@@ -107,7 +112,7 @@ public class GamePlay extends Screen {
         groundShapeR.set(new Vec2(width, 0), new Vec2(width, height));
         groundR.createFixture(groundShapeR, 0.0f);
 
-        this.layer.add(sandRock.get(i).layer());
+        this.layer.add(sandRock.get(0).layer());
         j++;
         i++;
 
@@ -130,13 +135,13 @@ public class GamePlay extends Screen {
                     DebugDraw.e_jointBit |
                     DebugDraw.e_aabbBit);
             debugDraw.setCamera(0, 0, 1f / GamePlay.M_PER_PIXEL);
-            //world.setDebugDraw(debugDraw);
+            world.setDebugDraw(debugDraw);
         }
 
-
-
-    this.layer.add(starBeams.get(0).layer());
-
+        for(StarBeam starBeam: starBeams ) {
+            this.layer.add(starBeam.layer());
+            //System.out.println(starBeams.size()+ " Jaa");
+        }
 
 
     }
@@ -183,7 +188,8 @@ public class GamePlay extends Screen {
                                 }
 
                                 //======================================================================================
-                                else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
+   
+                             else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
                                     matrix[1][0] = 1;
                                     checkMatrix = true;
                                 } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
@@ -232,14 +238,27 @@ public class GamePlay extends Screen {
                         }
 
                         if(matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2]  == 1) {
-                            StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
 
-                                //Shenlong.state = Shenlong.State.HURT;
-                                //StarBeam.layer().destroy();
-                                //world.destroyBody(StarBeam.body);
+                            for (StarBeam starBeam: starBeams) {
+                                starBeam = new StarBeam(world,100f,400f);
+                                starBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
+                                checkContact = true;
 
+                                if(contact.getFixtureB().getBody() == Shenlong.body/*Body Shenlong*/){
+                                        shenlongHP -= 3;
+                                }
+
+                                //if() {
+                                //    world.destroyBody(StarBeam.body);
+                                //}
+                                //
+
+                            }
+                            //world.destroyBody(StarBeam.body);
+                            System.out.println(checkContact);
+                            SandRock.state = SandRock.State.ATTK;
                                 clearMatrix();
-                                shenlongHP = shenlongHP - 3;
+                                //shenlongHP = shenlongHP - 3;
 
                                 System.out.println("HP = " + shenlongHP);
                                 if(shenlongHP <= 0 ) {
@@ -259,9 +278,11 @@ public class GamePlay extends Screen {
                                 clearMatrix();
                                 shenlongHP = shenlongHP - 6;
 
+
                                 System.out.println("HP = " + shenlongHP);
                                 if(shenlongHP <= 0 ) {
                                     ss.push(mapSpaceScreen);
+                                    shenlongHP = 10;
 
                         }}
 
@@ -273,6 +294,9 @@ public class GamePlay extends Screen {
                     }
                 }
                 );
+
+
+
             }
 
 
@@ -291,6 +315,8 @@ public class GamePlay extends Screen {
 
             }}
             );
+
+
 
 
     }
@@ -325,9 +351,9 @@ public class GamePlay extends Screen {
 
         shenlong.paint(clock);
 
-        for(int k=0;k<j;k++){
+        for (int k =0; k < j;k ++) {
             starBeams.get(k).paint(clock);
-
+            //System.out.println(starBeams.size()+ " Jaa");
         }
 
 
