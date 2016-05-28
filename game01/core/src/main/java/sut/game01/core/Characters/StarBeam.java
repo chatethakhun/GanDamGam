@@ -35,7 +35,11 @@ public class StarBeam {
 
     }
 
-    public  Layer layer() {
+
+
+
+    public Layer layer() {
+
         return sprite.layer();
     }
 

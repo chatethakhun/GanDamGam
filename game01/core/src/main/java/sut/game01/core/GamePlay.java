@@ -37,21 +37,23 @@ public class GamePlay extends Screen {
     private final ImageLayer tableLayer;
     private int p;
     private ArrayList<SandRock> sandRock = new ArrayList<SandRock>();
-    private boolean showDebugDraw = true,checkMatrix = false;
+    private boolean showDebugDraw = true, checkMatrix = false;
     public static World world;
     private DebugDrawBox2D debugDraw;
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
-    private int i=0,j=0,g=0,check = 0;
-    public static  int [][]matrix = new int[4][4];
+    private int i = 0, j = 0, g = 0, check = 0;
+    public static int[][] matrix = new int[4][4];
     Shenlong shenlong;
     //ArrayList<StarBeam> starBeams = new ArrayList<StarBeam>();
     int shenlongHP = 10;
     int sandRockHP = 10;
     MapSpaceScreen mapSpaceScreen;
+
     private ArrayList<StarBeam> starBeamList = new ArrayList<StarBeam>();
 
+    Boolean checkContact = false;
 
 
     public GamePlay(final ScreenStack ss) {
@@ -62,12 +64,9 @@ public class GamePlay extends Screen {
         this.bgLayer = graphics().createImageLayer(bgImage);
 
 
-
-
         Image tableImage = assets().getImage("images/Table/Table.png");
         this.tableLayer = graphics().createImageLayer(tableImage);
-        tableLayer.setTranslation(175,100);
-
+        tableLayer.setTranslation(175, 100);
 
 
         Vec2 gravity = new Vec2(0.0f, 10.0f);
@@ -82,15 +81,6 @@ public class GamePlay extends Screen {
 
 
 
-
-
-
-
-        //starBeams.add(0,new StarBeam(world,100,400f));
-
-
-
-
     }
 
     public void wasShown() {
@@ -98,7 +88,7 @@ public class GamePlay extends Screen {
         this.layer.add(bgLayer);
         this.layer.add(tableLayer);
 
-        shenlong = new Shenlong(world,550f,400f);
+        shenlong = new Shenlong(world, 550f, 400f);
         this.layer.add(shenlong.layer());
 
         Body ground = world.createBody(new BodyDef());
@@ -116,13 +106,9 @@ public class GamePlay extends Screen {
         groundShapeR.set(new Vec2(width, 0), new Vec2(width, height));
         groundR.createFixture(groundShapeR, 0.0f);
 
-        this.layer.add(sandRock.get(i).layer());
+        this.layer.add(sandRock.get(0).layer());
         j++;
         i++;
-
-
-
-
 
 
         if (showDebugDraw) {
@@ -143,21 +129,21 @@ public class GamePlay extends Screen {
         }
 
 
+        //this.layer.add(starBeams.get(0).layer());
 
 
-
-    //this.layer.add(starBeams.get(0).layer());
 
 
 
     }
+
     @Override
     public void update(final int delta) {
         super.update(delta);
         world.step(0.033f, 10, 10);
 
 
-        for(int k=0;k<j;k++){
+        for (int k = 0; k < j; k++) {
             sandRock.get(k).update(delta);
         }
 
@@ -165,168 +151,173 @@ public class GamePlay extends Screen {
 
 
 
-       ;
-
-
-
-
-
-
-
-
-
-
-
-
         world.setContactListener(new ContactListener() {
-            @Override
-            public void beginContact(final Contact contact) {
+                                     @Override
+                                     public void beginContact(final Contact contact) {
+
+
+                                         mouse().setListener(new Mouse.Adapter() {
+
+                                                                 @Override
+                                                                 public void onMouseDown(Mouse.ButtonEvent event) {
+
+
+                                                                     for (int i = 0; i < matrix.length; i++) {
+                                                                         for (int j = 0; j < matrix[i].length; j++) {
+                                                                             if (event.x() > 175 && event.x() < 250 && event.y() > 100 && event.y() < 175) {
+                                                                                 matrix[0][0] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 250 && event.x() < 325 && event.y() > 100 && event.y() < 175) {
+                                                                                 matrix[0][1] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 325 && event.x() < 400 && event.y() > 100 && event.y() < 175) {
+                                                                                 matrix[0][2] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 400 && event.x() < 475 && event.y() > 100 && event.y() < 175) {
+                                                                                 matrix[0][3] = 1;
+                                                                                 checkMatrix = true;
+                                                                             }
+
+                                                                             //======================================================================================
+
+                                                                             else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
+                                                                                 matrix[1][0] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
+                                                                                 matrix[1][1] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 325 && event.x() < 400 && event.y() > 175 && event.y() < 250) {
+                                                                                 matrix[1][2] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 400 && event.x() < 475 && event.y() > 175 && event.y() < 250) {
+                                                                                 matrix[1][3] = 1;
+                                                                                 checkMatrix = true;
+                                                                             }
+
+                                                                             //=======================================================================================
+                                                                             else if (event.x() > 175 && event.x() < 250 && event.y() > 250 && event.y() < 325) {
+                                                                                 matrix[2][0] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 250 && event.x() < 325 && event.y() > 250 && event.y() < 325) {
+                                                                                 matrix[2][1] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 325 && event.x() < 400 && event.y() > 250 && event.y() < 325) {
+                                                                                 matrix[2][2] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 400 && event.x() < 475 && event.y() > 250 && event.y() < 325) {
+                                                                                 matrix[2][3] = 1;
+                                                                                 checkMatrix = true;
+                                                                             }
+
+                                                                             //======================================================================================
+                                                                             else if (event.x() > 175 && event.x() < 250 && event.y() > 325 && event.y() < 400) {
+                                                                                 matrix[3][0] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 250 && event.x() < 325 && event.y() > 325 && event.y() < 400) {
+                                                                                 matrix[3][1] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 325 && event.x() < 400 && event.y() > 325 && event.y() < 400) {
+                                                                                 matrix[3][2] = 1;
+                                                                                 checkMatrix = true;
+                                                                             } else if (event.x() > 400 && event.x() < 475 && event.y() > 325 && event.y() < 400) {
+                                                                                 matrix[3][3] = 1;
+                                                                                 checkMatrix = true;
+                                                                             }
+                                                                             System.out.print(matrix[i][j] + " ");
+                                                                         }
+                                                                         System.out.println();
+                                                                     }
+
+
+                                                                     if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
 
 
 
-                mouse().setListener(new Mouse.Adapter(){
+                                                                         //Shenlong.state = Shenlong.State.HURT;
+                                                                         //StarBeam.layer().destroy();
+                                                                         //world.destroyBody(StarBeam.body);
 
-                    @Override
-                    public void onMouseDown(Mouse.ButtonEvent event) {
+                                                                         for (int i = 0; i < 1; i++) {
+
+                                                                             starBeamList.add(i, new StarBeam(world, SandRock.body.getPosition().x, SandRock.body.getPosition().y));
 
 
-                        for (int i = 0; i < matrix.length; i++) {
-                            for (int j = 0; j < matrix[i].length; j++) {
-                                if (event.x() > 175 && event.x() < 250 && event.y() > 100 && event.y() < 175) {
-                                    matrix[0][0] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 100 && event.y() < 175) {
-                                    matrix[0][1] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 100 && event.y() < 175) {
-                                    matrix[0][2] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 100 && event.y() < 175) {
-                                    matrix[0][3] = 1;
-                                    checkMatrix = true;
-                                }
+                                                                         }
 
-                                //======================================================================================
-                                else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
-                                    matrix[1][0] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
-                                    matrix[1][1] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 175 && event.y() < 250) {
-                                    matrix[1][2] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 175 && event.y() < 250) {
-                                    matrix[1][3] = 1;
-                                    checkMatrix = true;
-                                }
-
-                                //=======================================================================================
-                                else if (event.x() > 175 && event.x() < 250 && event.y() > 250 && event.y() < 325) {
-                                    matrix[2][0] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 250 && event.y() < 325) {
-                                    matrix[2][1] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 250 && event.y() < 325) {
-                                    matrix[2][2] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 250 && event.y() < 325) {
-                                    matrix[2][3] = 1;
-                                    checkMatrix = true;
-                                }
-
-                                //======================================================================================
-                                else if (event.x() > 175 && event.x() < 250 && event.y() > 325 && event.y() < 400) {
-                                    matrix[3][0] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 250 && event.x() < 325 && event.y() > 325 && event.y() < 400) {
-                                    matrix[3][1] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 325 && event.x() < 400 && event.y() > 325 && event.y() < 400) {
-                                    matrix[3][2] = 1;
-                                    checkMatrix = true;
-                                } else if (event.x() > 400 && event.x() < 475 && event.y() > 325 && event.y() < 400) {
-                                    matrix[3][3] = 1;
-                                    checkMatrix = true;
-                                }
-                                System.out.print(matrix[i][j] + " ");
-                            }
-                            System.out.println();
-                        }
+                                                                         //StarBeam.body.applyForce(new Vec2(200f, 200f), StarBeam.body.getPosition());
 
 
 
-                        if(matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2]  == 1) {
-                            //StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
+                                                                             checkContact = true;
 
-                            //Shenlong.state = Shenlong.State.HURT;
-                            //StarBeam.layer().destroy();
-                            //world.destroyBody(StarBeam.body);
-
-                            for (int i = 0; i < 1; i++) {
-
-                                starBeamList.add(i, new StarBeam(world, SandRock.body.getPosition().x,  SandRock.body.getPosition().y));
-
-
-                            }
-
-                            StarBeam.body.applyForce(new Vec2(200f,200f), StarBeam.body.getPosition());
-
-
-                                clearMatrix();
-                                shenlongHP = shenlongHP - 3;
-
-                                System.out.println("HP = " + shenlongHP);
-                                if(shenlongHP <= 0 ) {
-                                    ss.push(mapSpaceScreen);
+                                                                             if (contact.getFixtureB().getBody() == Shenlong.body/*Body Shenlong*/) {
+                                                                                 shenlongHP -= 3;
+                                                                             }
 
 
 
 
-                            }
-                        }else if(matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0]  == 1) {
-                            clearMatrix();
-                            shenlongHP = shenlongHP + 3;
-                        }else  if(matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2]  == 1) {
-                            StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
+                                                                        // }
+                                                                         //world.destroyBody(StarBeam.body);
+                                                                         System.out.println(checkContact);
+                                                                         SandRock.state = SandRock.State.ATTK;
+                                                                         clearMatrix();
+                                                                         //shenlongHP = shenlongHP - 3;
+
+                                                                         System.out.println("HP = " + shenlongHP);
+                                                                         if (shenlongHP <= 0) {
+                                                                             ss.push(mapSpaceScreen);
 
 
-                                clearMatrix();
-                                shenlongHP = shenlongHP - 6;
-
-                                System.out.println("HP = " + shenlongHP);
-                                if(shenlongHP <= 0 ) {
-                                    ss.push(mapSpaceScreen);
-
-                        }}
+                                                                         }
+                                                                     } else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
+                                                                         clearMatrix();
+                                                                         shenlongHP = shenlongHP + 3;
+                                                                     } else if (matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1) {
+                                                                         StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
 
 
-                        System.out.println(check/16);
-                        System.out.println("=====================================");
+                                                                         clearMatrix();
+                                                                         shenlongHP = shenlongHP - 6;
 
 
-                    }
-                }
-                );
-            }
+                                                                         System.out.println("HP = " + shenlongHP);
+                                                                         if (shenlongHP <= 0) {
+                                                                             ss.push(mapSpaceScreen);
+                                                                             shenlongHP = 10;
+
+                                                                         }
+                                                                     }
 
 
-            @Override
-            public void endContact(Contact contact) {
+                                                                     System.out.println(check / 16);
+                                                                     System.out.println("=====================================");
 
-            }
 
-            @Override
-            public void preSolve(Contact contact, Manifold manifold) {
+                                                                 }
+                                                             }
+                                         );
 
-            }
 
-            @Override
-            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+                                     }
 
-            }}
-            );
+
+                                     @Override
+                                     public void endContact(Contact contact) {
+
+                                     }
+
+                                     @Override
+                                     public void preSolve(Contact contact, Manifold manifold) {
+
+                                     }
+
+                                     @Override
+                                     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+                                     }
+                                 }
+        );
 
 
     }
@@ -337,23 +328,21 @@ public class GamePlay extends Screen {
     }
 
 
-
     @Override
     public void paint(Clock clock) {
         super.paint(clock);
 
-        if(showDebugDraw) {
+        if (showDebugDraw) {
             debugDraw.getCanvas().clear();
             world.drawDebugData();
             debugDraw.getCanvas().setFillColor(Color.rgb(0, 255, 0));
-            debugDraw.getCanvas().drawText("Shenlong HP = " + shenlongHP , 500, 100);
-            debugDraw.getCanvas().drawText("Sandrock HP = " + sandRockHP , 50, 100);
+            debugDraw.getCanvas().drawText("Shenlong HP = " + shenlongHP, 500, 100);
+            debugDraw.getCanvas().drawText("Sandrock HP = " + sandRockHP, 50, 100);
 
         }
 
 
-
-        for(int k=0;k<j;k++){
+        for (int k = 0; k < j; k++) {
             sandRock.get(k).paint(clock);
 
         }
@@ -363,21 +352,12 @@ public class GamePlay extends Screen {
 
 
         for(StarBeam starBeam : starBeamList){
-           starBeam.paint(clock);
+            starBeam.paint(clock);
             this.layer.add(starBeam.layer());
         }
 
 
-        //for(int k=0;k<j;k++){
-        //    starBeams.get(k).paint(clock);
-
-        //}
-
-
-
     }
-
-
 }
 
 
