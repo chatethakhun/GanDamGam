@@ -35,7 +35,7 @@ public class StarBeam {
 
     }
 
-    public static Layer layer() {
+    public  Layer layer() {
         return sprite.layer();
     }
 
@@ -101,5 +101,13 @@ public class StarBeam {
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x,y), 0f);
         return body;
+    }
+
+    public void visibleBody() {
+        sprite.layer().setVisible(false);
+    }
+
+    public void applyForce() {
+
     }
 }

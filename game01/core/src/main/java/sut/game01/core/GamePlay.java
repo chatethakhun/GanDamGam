@@ -46,11 +46,11 @@ public class GamePlay extends Screen {
     private int i=0,j=0,g=0,check = 0;
     public static  int [][]matrix = new int[4][4];
     Shenlong shenlong;
-    ArrayList<StarBeam> starBeams = new ArrayList<StarBeam>();
+    //ArrayList<StarBeam> starBeams = new ArrayList<StarBeam>();
     int shenlongHP = 10;
     int sandRockHP = 10;
     MapSpaceScreen mapSpaceScreen;
-
+    private ArrayList<StarBeam> starBeamList = new ArrayList<StarBeam>();
 
 
 
@@ -75,9 +75,18 @@ public class GamePlay extends Screen {
         world.setWarmStarting(true);
         world.setAutoClearForces(true);
 
-        sandRock.add(0,new SandRock(world, 50, 400f));
+        sandRock.add(0, new SandRock(world, 50, 400f));
 
-        starBeams.add(0,new StarBeam(world,100,400f));
+
+
+
+
+
+
+
+
+
+        //starBeams.add(0,new StarBeam(world,100,400f));
 
 
 
@@ -130,18 +139,20 @@ public class GamePlay extends Screen {
                     DebugDraw.e_jointBit |
                     DebugDraw.e_aabbBit);
             debugDraw.setCamera(0, 0, 1f / GamePlay.M_PER_PIXEL);
-            //world.setDebugDraw(debugDraw);
+            world.setDebugDraw(debugDraw);
         }
 
 
 
-    this.layer.add(starBeams.get(0).layer());
+
+
+    //this.layer.add(starBeams.get(0).layer());
 
 
 
     }
     @Override
-    public void update(int delta) {
+    public void update(final int delta) {
         super.update(delta);
         world.step(0.033f, 10, 10);
 
@@ -151,6 +162,19 @@ public class GamePlay extends Screen {
         }
 
         shenlong.update(delta);
+
+
+
+       ;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -231,12 +255,24 @@ public class GamePlay extends Screen {
                             System.out.println();
                         }
 
-                        if(matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2]  == 1) {
-                            StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
 
-                                //Shenlong.state = Shenlong.State.HURT;
-                                //StarBeam.layer().destroy();
-                                //world.destroyBody(StarBeam.body);
+
+                        if(matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2]  == 1) {
+                            //StarBeam.body.applyLinearImpulse(new Vec2(200f, 0), StarBeam.body.getPosition());
+
+                            //Shenlong.state = Shenlong.State.HURT;
+                            //StarBeam.layer().destroy();
+                            //world.destroyBody(StarBeam.body);
+
+                            for (int i = 0; i < 1; i++) {
+
+                                starBeamList.add(i, new StarBeam(world, SandRock.body.getPosition().x,  SandRock.body.getPosition().y));
+
+
+                            }
+
+                            StarBeam.body.applyForce(new Vec2(200f,200f), StarBeam.body.getPosition());
+
 
                                 clearMatrix();
                                 shenlongHP = shenlongHP - 3;
@@ -325,10 +361,17 @@ public class GamePlay extends Screen {
 
         shenlong.paint(clock);
 
-        for(int k=0;k<j;k++){
-            starBeams.get(k).paint(clock);
 
+        for(StarBeam starBeam : starBeamList){
+           starBeam.paint(clock);
+            this.layer.add(starBeam.layer());
         }
+
+
+        //for(int k=0;k<j;k++){
+        //    starBeams.get(k).paint(clock);
+
+        //}
 
 
 
