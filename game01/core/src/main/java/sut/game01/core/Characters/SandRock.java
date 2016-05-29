@@ -34,18 +34,9 @@ public class SandRock {
 
 
         if(hasLoaded == false) return;
-        for(int i = 0 ; i < 1; i++) {
 
-            switch (state) {
-                case ATTK:
-                    StarBeam starBeam;
-                    starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL,
-                            body.getPosition().y / GamePlay.M_PER_PIXEL);
-                    body.applyForce(new Vec2(200f, 0f), body.getPosition());
-                    GamePlay.addStarBeam(starBeam);
 
-            }
-        }
+
 
         sprite.layer().setTranslation(
                 (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
@@ -57,7 +48,14 @@ public class SandRock {
             switch (state) {
                 case IDLE: offset = 7;break;
                 case ATTK: offset = 0;
+                    if(spriteIndex == 5) {
+                        StarBeam starBeam;
+                        starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL,
+                                body.getPosition().y / GamePlay.M_PER_PIXEL);
 
+                        GamePlay.addStarBeam(starBeam);
+
+                    }
 
                     if(spriteIndex == 6) {
 
@@ -76,6 +74,8 @@ public class SandRock {
             spriteIndex = offset + ((spriteIndex + 1) % 7);
             sprite.setSprite(spriteIndex);
             e = 0;
+
+
 
 
 
@@ -130,6 +130,7 @@ public class SandRock {
         });
 
 
+
     }
 
     private Body initPhysicsBody(World world, float x, float y) {
@@ -151,6 +152,7 @@ public class SandRock {
 
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x,y), 0f);
+
         return body;
     }
 

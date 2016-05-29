@@ -54,6 +54,8 @@ public class MyGame extends Game.Default {
 
 
   public void update(int delta) {
+
+      super.update(delta);
       ss.update(delta);
 
       /*for(ImageLayer b: this.ball.values) {
