@@ -46,17 +46,22 @@ public class GamePlay extends Screen {
     private int i = 0, j = 0, g = 0, check = 0;
     public static int[][] matrix = new int[4][4];
     Shenlong shenlong;
+    StarBeam starBeam;
     //ArrayList<StarBeam> starBeams = new ArrayList<StarBeam>();
     int shenlongHP = 10;
     int sandRockHP = 10;
     MapSpaceScreen mapSpaceScreen;
 
-    private ArrayList<StarBeam> starBeamList = new ArrayList<StarBeam>();
+    private GroupLayer groupLayer = graphics().createGroupLayer();
+    static ArrayList<StarBeam> starBeamList = new ArrayList<StarBeam>();
+
+
 
     Boolean checkContact = false;
 
 
     public GamePlay(final ScreenStack ss) {
+
         this.ss = ss;
         this.mapSpaceScreen = new MapSpaceScreen(ss);
 
@@ -135,6 +140,8 @@ public class GamePlay extends Screen {
 
 
 
+
+
     }
 
     @Override
@@ -148,6 +155,12 @@ public class GamePlay extends Screen {
         }
 
         shenlong.update(delta);
+
+
+
+        for(StarBeam starBeam : starBeamList) {
+            groupLayer.add(starBeam.layer());
+        }
 
 
 
@@ -231,38 +244,21 @@ public class GamePlay extends Screen {
 
                                                                      if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
 
+                                                                         StarBeam.state = StarBeam.State.ATTK;
 
 
-                                                                         //Shenlong.state = Shenlong.State.HURT;
-                                                                         //StarBeam.layer().destroy();
-                                                                         //world.destroyBody(StarBeam.body);
+                                                                         checkContact = true;
 
-                                                                         for (int i = 0; i < 1; i++) {
-
-                                                                             starBeamList.add(i, new StarBeam(world, SandRock.body.getPosition().x, SandRock.body.getPosition().y));
-
-
+                                                                         if (contact.getFixtureB().getBody() == Shenlong.body/*Body Shenlong*/) {
+                                                                             shenlongHP -= 3;
                                                                          }
 
-                                                                         //StarBeam.body.applyForce(new Vec2(200f, 200f), StarBeam.body.getPosition());
 
-
-
-                                                                             checkContact = true;
-
-                                                                             if (contact.getFixtureB().getBody() == Shenlong.body/*Body Shenlong*/) {
-                                                                                 shenlongHP -= 3;
-                                                                             }
-
-
-
-
-                                                                        // }
+                                                                         // }
                                                                          //world.destroyBody(StarBeam.body);
                                                                          System.out.println(checkContact);
                                                                          SandRock.state = SandRock.State.ATTK;
                                                                          clearMatrix();
-                                                                         //shenlongHP = shenlongHP - 3;
 
                                                                          System.out.println("HP = " + shenlongHP);
                                                                          if (shenlongHP <= 0) {
@@ -323,9 +319,6 @@ public class GamePlay extends Screen {
     }
 
 
-    public void clearMatrix() {
-        matrix = new int[4][4];
-    }
 
 
     @Override
@@ -357,7 +350,27 @@ public class GamePlay extends Screen {
         }
 
 
+
     }
+
+
+    public void clearMatrix() {
+        matrix = new int[4][4];
+    }
+
+    public static void addStarBeam(StarBeam starBeam) {
+        starBeamList.add(starBeam);
+    }
+
+
+    //public void setStarBeamVisible() {
+
+
+       // }
+
+
+
+
 }
 
 
