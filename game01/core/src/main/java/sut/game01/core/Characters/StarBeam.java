@@ -11,6 +11,8 @@ import sut.game01.core.GamePlay;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 
+import java.util.ArrayList;
+
 /**
  * Created by Chatethakhun on 19/5/2559.
  */
@@ -18,19 +20,12 @@ public class StarBeam {
     private static Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
-    public static Body body;
+    public  static  Body body;
 
     public void update(int delta) {
 
         if(hasLoaded == false) return;
-        sprite.layer().setTranslation(
-                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
-                body.getPosition().y / GamePlay.M_PER_PIXEL);
 
-        e += delta;
-            spriteIndex = offset + ((spriteIndex + 1) % 7);
-            sprite.setSprite(spriteIndex);
-            e = 0;
 
 
     }
@@ -63,6 +58,7 @@ public class StarBeam {
 
     public StarBeam(final World world, final float x, final float y) {
 
+
         sprite = SpriteLoader.getSprite("images/Characters/SandRock/StarBeam.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
@@ -86,6 +82,7 @@ public class StarBeam {
     }
 
     private Body initPhysicsBody(World world, float x, float y) {
+        //this.world = world;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position = new Vec2(0,0);
@@ -111,7 +108,9 @@ public class StarBeam {
         sprite.layer().setVisible(false);
     }
 
-    public void applyForce() {
 
-    }
+
+
+
+
 }

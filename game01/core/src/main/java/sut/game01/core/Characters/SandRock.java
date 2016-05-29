@@ -7,41 +7,60 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
 import org.jbox2d.dynamics.contacts.Contact;
-import playn.core.Key;
-import playn.core.Keyboard;
-import playn.core.Layer;
-import playn.core.PlayN;
+import playn.core.*;
 import playn.core.util.Callback;
 import playn.core.util.Clock;
 import sut.game01.core.GamePlay;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 
+import java.util.ArrayList;
+
 /**
  * Created by Chatethakhun on 31/3/2559.
  */
 public class SandRock {
 
+    private World world;
     private Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
     public static Body body;
+    private GroupLayer groupLayer;
+    StarBeam starBeam;
+
 
     public void update(int delta) {
 
+
         if(hasLoaded == false) return;
+        for(int i = 0 ; i < 1; i++) {
+
+            switch (state) {
+                case ATTK:
+                    StarBeam starBeam;
+                    starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL,
+                            body.getPosition().y / GamePlay.M_PER_PIXEL);
+                    body.applyForce(new Vec2(200f, 0f), body.getPosition());
+                    GamePlay.addStarBeam(starBeam);
+
+            }
+        }
+
         sprite.layer().setTranslation(
                 (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
                 body.getPosition().y / GamePlay.M_PER_PIXEL);
 
          e += delta;
 
-
         if(e > 100) {
             switch (state) {
                 case IDLE: offset = 7;break;
                 case ATTK: offset = 0;
+
+
                     if(spriteIndex == 6) {
+
                        state = State.IDLE;
                     }
                         break;
@@ -88,6 +107,7 @@ public class SandRock {
 
     public SandRock(final World world, final float x, final float y) {
 
+        this.world = world;
         sprite = SpriteLoader.getSprite("images/Characters/SandRock/SandRock.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
@@ -108,6 +128,8 @@ public class SandRock {
                 PlayN.log().error("Error Loading Images!!!",throwable);
             }
         });
+
+
     }
 
     private Body initPhysicsBody(World world, float x, float y) {
