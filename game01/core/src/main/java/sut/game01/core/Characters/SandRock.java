@@ -28,6 +28,8 @@ public class SandRock {
     public static Body body;
     private GroupLayer groupLayer;
     StarBeam starBeam;
+    private boolean checkContact = false;
+
 
 
     public void update(int delta) {

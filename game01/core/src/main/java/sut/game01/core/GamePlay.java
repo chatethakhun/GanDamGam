@@ -14,7 +14,6 @@ import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.*;
 import playn.core.DebugDrawBox2D;
 import playn.core.util.Clock;
-import sut.game01.core.Characters.Gun;
 import sut.game01.core.Characters.SandRock;
 import sut.game01.core.Characters.Shenlong;
 import sut.game01.core.Characters.StarBeam;
@@ -22,7 +21,6 @@ import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static playn.core.PlayN.*;
 
@@ -36,7 +34,7 @@ public class GamePlay extends Screen {
     private final ImageLayer bgLayer;
     private final ImageLayer tableLayer;
     SandRock sandrock;
-    private boolean showDebugDraw = true, checkMatrix = false;
+    private boolean showDebugDraw = true,checkMatrix = false;
     public static World world;
     private DebugDrawBox2D debugDraw;
     public static float M_PER_PIXEL = 1 / 26.666667f;
@@ -266,6 +264,19 @@ public class GamePlay extends Screen {
 
                                          );
 
+                                         for(StarBeam starBeam: starBeamList) {
+                                         if(contact.getFixtureA().getBody() == Shenlong.body && contact.getFixtureB().getBody() == StarBeam.body) {
+                                             System.out.println("Hit");
+                                             starBeam.visibleBody(contact);
+                                             //impactStarBeam.add(starBeam);
+
+
+                                         }
+
+                                         }
+
+
+
                                      }
 
 
@@ -285,6 +296,8 @@ public class GamePlay extends Screen {
                                      }
                                  }
         );
+
+
 
 
 
@@ -317,6 +330,7 @@ public class GamePlay extends Screen {
             starBeam.paint(clock);
             layer.add(starBeam.layer());
         }
+
 
 
 
