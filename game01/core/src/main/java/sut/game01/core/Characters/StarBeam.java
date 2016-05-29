@@ -22,13 +22,7 @@ public class StarBeam {
     private boolean hasLoaded = false;
     public  static  Body body;
 
-    public void update(int delta) {
 
-        if(hasLoaded == false) return;
-
-
-
-    }
 
 
 
@@ -38,13 +32,7 @@ public class StarBeam {
         return sprite.layer();
     }
 
-    public void paint(Clock clock) {
-        if(hasLoaded == false)return;
-        sprite.layer().setTranslation(
-                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
-                body.getPosition().y / GamePlay.M_PER_PIXEL
-        );
-    }
+
 
     public enum State {
         ATTK,IDLE,HURT
@@ -72,6 +60,7 @@ public class StarBeam {
                         GamePlay.M_PER_PIXEL * y);
 
                 hasLoaded = true;
+
             }
 
             @Override
@@ -100,12 +89,31 @@ public class StarBeam {
         body.createFixture(fixtureDef);
 
         body.setLinearDamping(0.2f);
-        body.setTransform(new Vec2(x,y), 0f);
+        body.setTransform(new Vec2(x, y), 0f);
+        body.applyForce(new Vec2(1000f, 0f), body.getPosition());
         return body;
+
     }
 
     public void visibleBody() {
         sprite.layer().setVisible(false);
+    }
+
+    public void update(int delta) {
+
+        if(hasLoaded == false) return;
+
+
+
+
+    }
+
+    public void paint(Clock clock) {
+        if(hasLoaded == false)return;
+        sprite.layer().setTranslation(
+                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
+                body.getPosition().y / GamePlay.M_PER_PIXEL
+        );
     }
 
 
