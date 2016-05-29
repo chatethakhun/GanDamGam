@@ -3,6 +3,7 @@ package sut.game01.core.Characters;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.Layer;
 import playn.core.PlayN;
 import playn.core.util.Callback;
@@ -21,10 +22,7 @@ public class StarBeam {
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
     public  static  Body body;
-
-
-
-
+    private boolean checkContact = false;
 
 
     public Layer layer() {
@@ -95,8 +93,10 @@ public class StarBeam {
 
     }
 
-    public void visibleBody() {
+    public void visibleBody(Contact contact) {
+        checkContact = true;
         sprite.layer().setVisible(false);
+
     }
 
     public void update(int delta) {
