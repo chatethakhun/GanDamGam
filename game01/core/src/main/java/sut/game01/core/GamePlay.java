@@ -31,32 +31,38 @@ import static playn.core.PlayN.*;
  */
 public class GamePlay extends Screen {
 
+
     private final ScreenStack ss;
     private final ImageLayer bgLayer;
     private final ImageLayer tableLayer;
-    SandRock sandrock;
-    private boolean showDebugDraw = true,checkMatrix = false;
     public static World world;
     private DebugDrawBox2D debugDraw;
+    MapSpaceScreen mapSpaceScreen;
+    private GroupLayer groupLayer = graphics().createGroupLayer();
+
+
+    private boolean showDebugDraw = true,checkMatrix = false;
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
-    int check = 0;
+    int check = 0,shenlongHP = 10,sandRockHP = 10, countPlayer = 0;
     int[][] matrix = new int[4][4];
-    Shenlong shenlong;
-    int shenlongHP = 10;
-    int sandRockHP = 10;
-    MapSpaceScreen mapSpaceScreen;
-    HealthGauge healthGauge;
     private boolean checkMulti2 = false;
 
-    private GroupLayer groupLayer = graphics().createGroupLayer();
+
+
+    SandRock sandrock;
+    HealthGauge healthGauge;
+    Shenlong shenlong;
+
+
+
     static ArrayList<StarBeam> starBeamList;
     ArrayList<Body> impactStarBeam = new ArrayList<Body>();
 
 
 
-    Boolean checkContact = false;
+
 
 
     public GamePlay(final ScreenStack ss) {
@@ -117,6 +123,26 @@ public class GamePlay extends Screen {
         groundShapeR.set(new Vec2(width, 0), new Vec2(width, height));
         groundR.createFixture(groundShapeR, 0.0f);
 
+        keyboard().setListener(new Keyboard.Listener() {
+            @Override
+            public void onKeyDown(Keyboard.Event event) {
+                switch (event.key()) {
+                    case ESCAPE:
+                        ss.remove(ss.top());
+
+                }
+            }
+
+            @Override
+            public void onKeyTyped(Keyboard.TypedEvent typedEvent) {
+
+            }
+
+            @Override
+            public void onKeyUp(Keyboard.Event event) {
+
+            }
+        });
 
 
 
@@ -159,6 +185,8 @@ public class GamePlay extends Screen {
         }
 
         healthGauge.update(delta);
+
+
 
 
 
@@ -257,7 +285,9 @@ public class GamePlay extends Screen {
                                                                              case DEC3: HealthGauge.state = HealthGauge.State.DEC2;
                                                                                  break;
                                                                          }
-                                                                         shenlongHP = shenlongHP + 3;
+                                                                         while (shenlongHP < 10) {
+                                                                             shenlongHP = shenlongHP + 3;
+                                                                         }
                                                                          clearMatrix();
                                                                      }else if(matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1){
                                                                          SandRock.state = SandRock.State.ATTK;
@@ -273,7 +303,9 @@ public class GamePlay extends Screen {
                                                                              case DEC3: HealthGauge.state = HealthGauge.State.DEC2;
                                                                                  break;
                                                                          }
-                                                                         shenlongHP = shenlongHP + 3;
+                                                                         while (shenlongHP < 10) {
+                                                                             shenlongHP = shenlongHP + 3;
+                                                                         }
                                                                          clearMatrix();
                                                                      }
 
@@ -288,13 +320,17 @@ public class GamePlay extends Screen {
 
                                          );
 
-                                         for(StarBeam starBeam: starBeamList) {
+
                                          if(contact.getFixtureA().getBody() == Shenlong.body && contact.getFixtureB().getBody() == StarBeam.body      ) {
-                                             System.out.println("Hit");
-                                             starBeam.visibleBody(contact);
-                                             impactStarBeam.add(starBeam.body);
 
+                                             StarBeam.visibleBody();
+                                             impactStarBeam.add(StarBeam.body);
+                                             Shenlong.body.applyForce(new Vec2(-500f, 0f), Shenlong.body.getPosition());
 
+                                             int sum = 0;
+
+                                             System.out.println("Hit sum = " + sum);
+                                             sum++;
 
                                              if(checkMulti2 == false) {
                                                  switch (HealthGauge.state){
@@ -304,10 +340,10 @@ public class GamePlay extends Screen {
                                                          break;
                                                      case DEC2:HealthGauge.state = HealthGauge.State.DEC3;
                                                          break;
-                                                     case DEC3: ss.push(mapSpaceScreen);
                                                  }
                                                  checkMulti2 = false;
                                                  shenlongHP = (shenlongHP - 3);
+
                                              }else {
                                                  switch (HealthGauge.state) {
                                                      case FULL: HealthGauge.state = HealthGauge.State.DEC2;
@@ -320,11 +356,16 @@ public class GamePlay extends Screen {
                                              }
 
 
-                                         }
 
                                          }
 
 
+
+
+
+                                         if(shenlongHP <= 0 ) {
+                                             ss.push(mapSpaceScreen);
+                                         }
 
                                      }
 
@@ -350,6 +391,8 @@ public class GamePlay extends Screen {
         for(Body body : impactStarBeam) {
             world.destroyBody(body);
         }
+
+
 
 
 

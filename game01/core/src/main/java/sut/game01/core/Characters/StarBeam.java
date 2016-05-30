@@ -93,8 +93,8 @@ public class StarBeam {
 
     }
 
-    public void visibleBody(Contact contact) {
-        checkContact = true;
+    public static void visibleBody() {
+
         sprite.layer().setVisible(false);
 
     }

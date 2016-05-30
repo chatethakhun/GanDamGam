@@ -32,70 +32,7 @@ public class SandRock {
 
 
 
-    public void update(int delta) {
 
-
-        if(hasLoaded == false) return;
-
-
-
-
-        sprite.layer().setTranslation(
-                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
-                body.getPosition().y / GamePlay.M_PER_PIXEL);
-
-         e += delta;
-
-        if(e > 100) {
-            switch (state) {
-                case IDLE: offset = 7;break;
-                case ATTK: offset = 0;
-                    if(spriteIndex == 5) {
-                        StarBeam starBeam;
-                        starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL,
-                                body.getPosition().y / GamePlay.M_PER_PIXEL);
-
-                        GamePlay.addStarBeam(starBeam);
-
-                    }
-
-                    if(spriteIndex == 6) {
-
-                       state = State.IDLE;
-                    }
-                        break;
-
-
-                case HURT: offset = 14;
-                    //if(spriteIndex == 20){
-                    //    state = State.IDLE;
-                    //}
-                    
-                    break;
-            }
-            spriteIndex = offset + ((spriteIndex + 1) % 7);
-            sprite.setSprite(spriteIndex);
-            e = 0;
-
-
-
-
-
-
-        }
-    }
-
-    public Layer layer() {
-        return sprite.layer();
-    }
-
-    public void paint(Clock clock) {
-        if(hasLoaded == false)return;
-        sprite.layer().setTranslation(
-                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
-                body.getPosition().y / GamePlay.M_PER_PIXEL
-        );
-    }
 
     public enum State {
         ATTK,IDLE,HURT
@@ -156,6 +93,70 @@ public class SandRock {
         body.setTransform(new Vec2(x,y), 0f);
 
         return body;
+    }
+    public void update(int delta) {
+
+
+        if(hasLoaded == false) return;
+
+
+
+
+        sprite.layer().setTranslation(
+                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
+                body.getPosition().y / GamePlay.M_PER_PIXEL);
+
+        e += delta;
+
+        if(e > 100) {
+            switch (state) {
+                case IDLE: offset = 7;break;
+                case ATTK: offset = 0;
+                    if(spriteIndex == 5) {
+                        StarBeam starBeam;
+                        starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL,
+                                body.getPosition().y / GamePlay.M_PER_PIXEL);
+
+                        GamePlay.addStarBeam(starBeam);
+
+                    }
+
+                    if(spriteIndex == 6) {
+
+                        state = State.IDLE;
+                    }
+                    break;
+
+
+                case HURT: offset = 14;
+                    //if(spriteIndex == 20){
+                    //    state = State.IDLE;
+                    //}
+
+                    break;
+            }
+            spriteIndex = offset + ((spriteIndex + 1) % 7);
+            sprite.setSprite(spriteIndex);
+            e = 0;
+
+
+
+
+
+
+        }
+    }
+
+    public Layer layer() {
+        return sprite.layer();
+    }
+
+    public void paint(Clock clock) {
+        if(hasLoaded == false)return;
+        sprite.layer().setTranslation(
+                (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
+                body.getPosition().y / GamePlay.M_PER_PIXEL
+        );
     }
 
 }
