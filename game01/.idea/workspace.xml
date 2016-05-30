@@ -25,14 +25,18 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GamePlay.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="GamePlay.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.07881773">
-              <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+            <state vertical-scroll-proportion="-34.517242">
+              <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
               <folding>
-                <element signature="e#5370#16693#0" expanded="true" />
-                <element signature="e#16692#16693#0" expanded="true" />
+                <element signature="e#5564#17825#0" expanded="true" />
+                <element signature="e#17824#17825#0" expanded="true" />
+                <element signature="e#21046#31050#0" expanded="true" />
+                <element signature="e#31049#31050#0" expanded="true" />
+                <element signature="e#35704#35705#0" expanded="true" />
+                <element signature="e#35746#35747#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -58,6 +62,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="Shenlong.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/Shenlong.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5303777">
+              <caret line="34" column="10" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
+              <folding>
+                <element signature="e#2636#2637#0" expanded="true" />
+                <element signature="e#2722#2723#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -76,13 +93,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/MyGame.java" />
-        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/Shenlong.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/Gauge/HealthGauge.java" />
         <option value="$PROJECT_DIR$/assets/src/main/resources/assets/images/HP/HP.json" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/StarBeam.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/HomeScreen.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/SandRock.java" />
         <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/Shenlong.java" />
       </list>
     </option>
   </component>
@@ -747,7 +764,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java</url>
-          <line>323</line>
+          <line>95</line>
           <properties />
           <option name="timeStamp" value="12" />
         </line-breakpoint>
@@ -772,8 +789,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -806,8 +827,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -840,8 +865,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -874,8 +903,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="270" column="0" selection-start-line="270" selection-start-column="0" selection-end-line="270" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -910,8 +943,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -951,8 +988,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -987,8 +1028,12 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1013,13 +1058,6 @@
     <entry file="file://$PROJECT_DIR$/assets/src/main/resources/assets/images/Gun/gun.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/Shenlong.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="30" selection-start-line="111" selection-start-column="30" selection-end-line="111" selection-end-column="30" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/src/main/resources/assets/images/Characters/SandRock/SandRock.json">
@@ -1087,6 +1125,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-34.517242">
+          <caret line="374" column="0" selection-start-line="374" selection-start-column="0" selection-end-line="374" selection-end-column="0" />
+          <folding>
+            <element signature="e#5564#17825#0" expanded="true" />
+            <element signature="e#17824#17825#0" expanded="true" />
+            <element signature="e#21046#31050#0" expanded="true" />
+            <element signature="e#31049#31050#0" expanded="true" />
+            <element signature="e#35704#35705#0" expanded="true" />
+            <element signature="e#35746#35747#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/SandRock.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1095,13 +1148,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/GamePlay.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/sut/game01/core/Characters/Shenlong.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07881773">
-          <caret line="197" column="0" selection-start-line="197" selection-start-column="0" selection-end-line="197" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5303777">
+          <caret line="34" column="10" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
           <folding>
-            <element signature="e#5370#16693#0" expanded="true" />
-            <element signature="e#16692#16693#0" expanded="true" />
+            <element signature="e#2636#2637#0" expanded="true" />
+            <element signature="e#2722#2723#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -30,6 +30,9 @@ public class Shenlong {
                 body.getPosition().y / GamePlay.M_PER_PIXEL);
 
         e += delta;
+        //switch (state) {
+          //  case ATTK: StarBeam starBeam;
+        //}
 
 
         if(e > 200) {
