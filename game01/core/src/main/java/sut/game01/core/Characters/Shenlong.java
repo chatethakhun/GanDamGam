@@ -109,7 +109,7 @@ public class Shenlong {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.4f;
+        fixtureDef.density = 1f;
         //fixtureDef.friction = 0.1f;
         //fixtureDef.restitution = 1f;
         body.createFixture(fixtureDef);

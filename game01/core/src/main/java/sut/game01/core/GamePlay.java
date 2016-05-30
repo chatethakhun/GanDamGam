@@ -17,6 +17,7 @@ import playn.core.util.Clock;
 import sut.game01.core.Characters.SandRock;
 import sut.game01.core.Characters.Shenlong;
 import sut.game01.core.Characters.StarBeam;
+import sut.game01.core.Gauge.HealthGauge;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
@@ -46,10 +47,12 @@ public class GamePlay extends Screen {
     int shenlongHP = 10;
     int sandRockHP = 10;
     MapSpaceScreen mapSpaceScreen;
+    HealthGauge healthGauge;
+    private boolean checkMulti2 = false;
 
     private GroupLayer groupLayer = graphics().createGroupLayer();
     static ArrayList<StarBeam> starBeamList;
-    ArrayList<StarBeam> impactStarBeam = new ArrayList<StarBeam>();
+    ArrayList<Body> impactStarBeam = new ArrayList<Body>();
 
 
 
@@ -96,6 +99,9 @@ public class GamePlay extends Screen {
         shenlong = new Shenlong(world, 550f, 400f);
         this.layer.add(shenlong.layer());
 
+        healthGauge = new HealthGauge(520f,50f);
+        this.layer.add(healthGauge.layer());
+
         Body ground = world.createBody(new BodyDef());
         EdgeShape groundShape = new EdgeShape();
         groundShape.set(new Vec2(0, 15), new Vec2(width, 15));//set(new Vec2(???????), new Vec2(?????))
@@ -132,21 +138,10 @@ public class GamePlay extends Screen {
             world.setDebugDraw(debugDraw);
         }
 
-
-        //this.layer.add(starBeams.get(0).layer());
-
-
-
-
-
-
-
     }
 
     @Override
     public void update(int delta) {
-        //super.update(delta);
-//        /System.out.println("delta = " + delta);
         world.step(0.033f, 10, 10);
 
 
@@ -162,6 +157,8 @@ public class GamePlay extends Screen {
             starBeam.update(delta);
             groupLayer.add(starBeam.layer());
         }
+
+        healthGauge.update(delta);
 
 
 
@@ -251,6 +248,33 @@ public class GamePlay extends Screen {
 
 
 
+                                                                     }else if(matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1){
+                                                                         switch (HealthGauge.state) {
+                                                                             case DEC1: HealthGauge.state = HealthGauge.State.FULL;
+                                                                                 break;
+                                                                             case DEC2: HealthGauge.state = HealthGauge.State.DEC1;
+                                                                                 break;
+                                                                             case DEC3: HealthGauge.state = HealthGauge.State.DEC2;
+                                                                                 break;
+                                                                         }
+                                                                         shenlongHP = shenlongHP + 3;
+                                                                         clearMatrix();
+                                                                     }else if(matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1){
+                                                                         SandRock.state = SandRock.State.ATTK;
+                                                                         checkMulti2 = true;
+                                                                         clearMatrix();
+
+                                                                     }else if(matrix[0][3] == 1 && matrix[1][3] == 1 && matrix[2][3] == 1){
+                                                                         switch (HealthGauge.state) {
+                                                                             case DEC1: HealthGauge.state = HealthGauge.State.FULL;
+                                                                                 break;
+                                                                             case DEC2: HealthGauge.state = HealthGauge.State.DEC1;
+                                                                                 break;
+                                                                             case DEC3: HealthGauge.state = HealthGauge.State.DEC2;
+                                                                                 break;
+                                                                         }
+                                                                         shenlongHP = shenlongHP + 3;
+                                                                         clearMatrix();
                                                                      }
 
 
@@ -265,10 +289,35 @@ public class GamePlay extends Screen {
                                          );
 
                                          for(StarBeam starBeam: starBeamList) {
-                                         if(contact.getFixtureA().getBody() == Shenlong.body && contact.getFixtureB().getBody() == StarBeam.body) {
+                                         if(contact.getFixtureA().getBody() == Shenlong.body && contact.getFixtureB().getBody() == StarBeam.body      ) {
                                              System.out.println("Hit");
                                              starBeam.visibleBody(contact);
-                                             //impactStarBeam.add(starBeam);
+                                             impactStarBeam.add(starBeam.body);
+
+
+
+                                             if(checkMulti2 == false) {
+                                                 switch (HealthGauge.state){
+                                                     case FULL: HealthGauge.state = HealthGauge.State.DEC1;
+                                                         break;
+                                                     case DEC1:HealthGauge.state = HealthGauge.State.DEC2;
+                                                         break;
+                                                     case DEC2:HealthGauge.state = HealthGauge.State.DEC3;
+                                                         break;
+                                                     case DEC3: ss.push(mapSpaceScreen);
+                                                 }
+                                                 checkMulti2 = false;
+                                                 shenlongHP = (shenlongHP - 3);
+                                             }else {
+                                                 switch (HealthGauge.state) {
+                                                     case FULL: HealthGauge.state = HealthGauge.State.DEC2;
+                                                         break;
+                                                     case DEC1: HealthGauge.state = HealthGauge.State.DEC3;
+                                                         break;
+                                                 }
+                                                 shenlongHP = shenlongHP - 6;
+                                                 checkMulti2 = false;
+                                             }
 
 
                                          }
@@ -298,7 +347,9 @@ public class GamePlay extends Screen {
         );
 
 
-
+        for(Body body : impactStarBeam) {
+            world.destroyBody(body);
+        }
 
 
 
@@ -316,8 +367,8 @@ public class GamePlay extends Screen {
             debugDraw.getCanvas().clear();
             world.drawDebugData();
             debugDraw.getCanvas().setFillColor(Color.rgb(0, 255, 0));
-            debugDraw.getCanvas().drawText("Shenlong HP = " + shenlongHP, 500, 100);
-            debugDraw.getCanvas().drawText("Sandrock HP = " + sandRockHP, 50, 100);
+            debugDraw.getCanvas().drawText("Shenlong HP = " + shenlongHP  , 500, 100);
+            debugDraw.getCanvas().drawText("Sandrock HP = " + sandRockHP , 50, 100);
 
         }
     sandrock.paint(clock);
@@ -331,7 +382,7 @@ public class GamePlay extends Screen {
             layer.add(starBeam.layer());
         }
 
-
+    healthGauge.paint(clock);
 
 
     }
