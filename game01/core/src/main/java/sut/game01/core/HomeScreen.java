@@ -1,6 +1,7 @@
 package sut.game01.core;
 
 import playn.core.*;
+import playn.core.util.Clock;
 import react.UnitSlot;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
@@ -68,23 +69,21 @@ public class HomeScreen extends Screen {
         settingLayer.setTranslation(20, 400);
 
 
-
-        newButton.addListener(new Mouse.LayerAdapter(){
+        newButton.addListener(new Mouse.LayerAdapter() {
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(gamePlay);
             }
         });
 
-        settingLayer.addListener(new Mouse.LayerAdapter()
-        {
+        settingLayer.addListener(new Mouse.LayerAdapter() {
 
             public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(setting);
             }
         });
 
-        loadLayer.addListener(new Mouse.LayerAdapter(){
+        loadLayer.addListener(new Mouse.LayerAdapter() {
 
             public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(loadGame);
@@ -92,10 +91,15 @@ public class HomeScreen extends Screen {
         });
 
 
+
     }
 
+    @Override
+    public void update(int delta) {
+        super.update(delta);
 
-    
+    }
+
     public void wasShown() {
         super.wasShown();
 
@@ -107,6 +111,14 @@ public class HomeScreen extends Screen {
 
 
 
+
+
+
+    }
+
+    @Override
+    public void paint(Clock clock) {
+        super.paint(clock);
 
     }
 }
