@@ -24,6 +24,7 @@ import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static playn.core.PlayN.*;
 
@@ -59,6 +60,7 @@ public class GamePlay extends Screen {
     HealthGauge healthGauge;
     HealthGaugeSandRock healthGaugeSandRock;
     Shenlong shenlong;
+    StarBeam starBeam;
 
 
 
@@ -134,6 +136,20 @@ public class GamePlay extends Screen {
                 switch (event.key()) {
                     case ESCAPE:
                         ss.remove(ss.top());
+                        world.destroyBody(SandRock.body);
+                        world.destroyBody(Shenlong.body);
+                        world.destroyBody(StarBeam.body);
+                        sandrock.layer().destroy();
+                        shenlong.layer().destroy();
+                        healthGaugeSandRock.layer().destroy();
+                        healthGauge.layer().destroy();
+                        HealthGauge.state = HealthGauge.State.FULL;
+                        HealthGaugeSandRock.state  = HealthGaugeSandRock.State.FULL;
+                        sandRockHP = 0;
+                        shenlongHP = 0;
+                        countPlayer = 'S';
+                        debugDraw.getCanvas().clear();
+
 
                 }
             }
@@ -374,6 +390,10 @@ mouse().setListener(new Mouse.Adapter() {
 
             case 'L':
                 debugString = "Player 2";
+                Random ramdam = new Random();
+
+                int attk = ramdam.nextInt(3);
+                System.out.println(attk);
                 if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
                     Shenlong.state = Shenlong.State.ATTK;
                     checkMulti2 = false;
