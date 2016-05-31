@@ -76,7 +76,7 @@ public class StarBeamShenlong {
 
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x, y), 0f);
-        body.applyForce(new Vec2(-1000f, 0f), body.getPosition());
+        body.applyLinearImpulse(new Vec2(-1000f, 0f), body.getPosition());
         return body;
 
     }
