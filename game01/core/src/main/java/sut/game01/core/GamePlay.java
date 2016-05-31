@@ -107,7 +107,7 @@ public class GamePlay extends Screen {
         this.layer.add(tableLayer);
 
 
-        sandrock = new SandRock(world, 50, 400f);
+        sandrock = new SandRock(world, 100, 400f);
         this.layer.add(sandrock.layer());
 
         shenlong = new Shenlong(world, 550f, 400f);
@@ -188,7 +188,7 @@ public class GamePlay extends Screen {
                     DebugDraw.e_jointBit |
                     DebugDraw.e_aabbBit);
             debugDraw.setCamera(0, 0, 1f / GamePlay.M_PER_PIXEL);
-            world.setDebugDraw(debugDraw);
+            //world.setDebugDraw(debugDraw);
         }
 
 
@@ -279,6 +279,7 @@ mouse().setListener(new Mouse.Adapter() {
                 debugString = "Player 1" ;
                 if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
                     SandRock.state = SandRock.State.ATTK;
+
                     clearMatrix();
 
                 }else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
@@ -326,6 +327,7 @@ mouse().setListener(new Mouse.Adapter() {
                     @Override
                     public void beginContact(final Contact contact) {
                         if (contact.getFixtureA().getBody() == Shenlong.body) {
+                            Shenlong.body.applyForce(new Vec2(-800f,0f),Shenlong.body.getPosition());
                             StarBeam.visibleBody();
                             impactStarBeam.add(StarBeam.body);
                             checkPlauyer = false;
@@ -397,12 +399,9 @@ mouse().setListener(new Mouse.Adapter() {
 
             case 'L':
                 debugString = "Player 2";
-                Random ramdam = new Random();
-
-                int attk = ramdam.nextInt(3);
-                System.out.println(attk);
                 if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
                     Shenlong.state = Shenlong.State.ATTK;
+
                     checkMultiSheenlong = false;
                     clearMatrix();
             }else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
@@ -450,6 +449,7 @@ mouse().setListener(new Mouse.Adapter() {
                     public void beginContact(final Contact contact) {
                         if (contact.getFixtureA().getBody() == SandRock.body) {
                             StarBeamShenlong.visibleBody();
+                            SandRock.body.applyForce(new Vec2(0f, 1800f), SandRock.body.getPosition());
                             checkPlauyer = true;
                             check(checkPlauyer);
                             impactStarBeamShenlong.add(StarBeamShenlong.body);
@@ -520,7 +520,11 @@ mouse().setListener(new Mouse.Adapter() {
             world.destroyBody(body);
         }
 
-        world.step(0.033f, 10, 10);
+        try {
+            world.step(0.055f,10,10);
+        }catch (ArrayIndexOutOfBoundsException e){
+
+        }
 
 
         sandrock.update(delta);
