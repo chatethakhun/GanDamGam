@@ -114,7 +114,7 @@ public class SandRock {
                 case ATTK: offset = 0;
                     if(spriteIndex == 5) {
                         StarBeam starBeam;
-                        starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL,
+                        starBeam = new StarBeam(world, body.getPosition().x / GamePlay.M_PER_PIXEL + 100,
                                 body.getPosition().y / GamePlay.M_PER_PIXEL);
 
                         GamePlay.addStarBeam(starBeam);
