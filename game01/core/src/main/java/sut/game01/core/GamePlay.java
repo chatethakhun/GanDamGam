@@ -44,6 +44,7 @@ public class GamePlay extends Screen {
     GameOverScreen gameOverScreen;
     private GroupLayer groupLayer = graphics().createGroupLayer();
     private GroupLayer groupLayerShenlong = graphics().createGroupLayer();
+    Sound sound;
 
 
     private boolean showDebugDraw = true, checkMatrix = false;
@@ -52,7 +53,7 @@ public class GamePlay extends Screen {
     private static int height = 18;
     int check = 0, shenlongHP = 0, sandRockHP = 0;
     int[][] matrix = new int[4][4];
-    private boolean checkMulti2 = false,checkPlauyer = false;
+    private boolean checkMulti2 = false,checkPlauyer = false,checkMultiSheenlong = false;
     char countPlayer = 'S';
 
 
@@ -85,6 +86,9 @@ public class GamePlay extends Screen {
         tableLayer.setTranslation(175, 100);
 
 
+
+
+
         Vec2 gravity = new Vec2(0.0f, 10.0f);
         world = new World(gravity);
         world.setWarmStarting(true);
@@ -114,6 +118,8 @@ public class GamePlay extends Screen {
 
         healthGaugeSandRock = new HealthGaugeSandRock(125f,50f);
         this.layer.add(healthGaugeSandRock.layer());
+
+
 
         Body ground = world.createBody(new BodyDef());
         EdgeShape groundShape = new EdgeShape();
@@ -148,6 +154,8 @@ public class GamePlay extends Screen {
                         sandRockHP = 0;
                         shenlongHP = 0;
                         countPlayer = 'S';
+                        checkMulti2 = false;
+                        checkMultiSheenlong = false;
                         debugDraw.getCanvas().clear();
 
 
@@ -266,7 +274,6 @@ mouse().setListener(new Mouse.Adapter() {
 
 
 });
-        System.out.println(countPlayer);
         switch (countPlayer) {
             case 'S':
                 debugString = "Player 1" ;
@@ -342,7 +349,7 @@ mouse().setListener(new Mouse.Adapter() {
                                         ss.push(mapSpaceScreen);
                                         break;
                                 }
-                                shenlongHP = (shenlongHP + 3);
+                                sandRockHP = (sandRockHP + 3);
 
 
                             } else {
@@ -363,7 +370,7 @@ mouse().setListener(new Mouse.Adapter() {
                                         ss.push(mapSpaceScreen);
                                         break;
                                 }
-                                shenlongHP = shenlongHP + 6;
+                                sandRockHP = sandRockHP + 6;
                             }
 
                         }
@@ -396,7 +403,7 @@ mouse().setListener(new Mouse.Adapter() {
                 System.out.println(attk);
                 if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
                     Shenlong.state = Shenlong.State.ATTK;
-                    checkMulti2 = false;
+                    checkMultiSheenlong = false;
                     clearMatrix();
             }else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
                     switch (HealthGauge.state) {
@@ -417,7 +424,7 @@ mouse().setListener(new Mouse.Adapter() {
 
                 } else if (matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1) {
                     Shenlong.state = Shenlong.State.ATTK;
-                    checkMulti2 = true;
+                    checkMultiSheenlong = true;
                     clearMatrix();
 
 
@@ -442,53 +449,52 @@ mouse().setListener(new Mouse.Adapter() {
                     @Override
                     public void beginContact(final Contact contact) {
                         if (contact.getFixtureA().getBody() == SandRock.body) {
-                            System.out.println("Hit");
                             StarBeamShenlong.visibleBody();
                             checkPlauyer = true;
                             check(checkPlauyer);
                             impactStarBeamShenlong.add(StarBeamShenlong.body);
-                            checkMulti2 = false;
-                            if (checkMulti2 == false) {
-                                switch (HealthGaugeSandRock.state) {
-                                    case FULL:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1;
-                                        break;
-                                    case DEC1:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
-                                        break;
-                                    case DEC2:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC3;
-                                        break;
-                                    case DEC3:
-                                        ss.push(mapSpaceScreen);
-                                        break;
-                                }
-                                sandRockHP = (shenlongHP + 3);
+                                if (checkMultiSheenlong == false) {
+                                    switch (HealthGaugeSandRock.state) {
+                                        case FULL:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1;
+                                            break;
+                                        case DEC1:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
+                                            break;
+                                        case DEC2:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC3;
+                                            break;
+                                        case DEC3:
+                                            ss.push(mapSpaceScreen);
+                                            break;
+                                    }
+                                    shenlongHP= (shenlongHP + 3);
 
 
-                            } else {
-                                switch (HealthGaugeSandRock.state) {
-                                    case FULL:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
-                                        break;
-                                    case DEC1:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC3;
-                                        break;
-                                    case DEC2:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.state.EMPTY;
-                                        break;
-                                    case DEC3:
-                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1.EMPTY;
-                                        break;
-                                    case EMPTY:
-                                        ss.push(mapSpaceScreen);
+                                } else {
+                                    switch (HealthGaugeSandRock.state) {
+                                        case FULL:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
+                                            break;
+                                        case DEC1:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC3;
+                                            break;
+                                        case DEC2:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.EMPTY;
+                                            break;
+                                        case DEC3:
+                                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.EMPTY;
+                                            break;
+                                        case EMPTY:
+                                            ss.push(mapSpaceScreen);
+                                    }
+                                    shenlongHP = shenlongHP + 6;
+                                    checkMulti2 = false;
                                 }
-                                shenlongHP = shenlongHP + 6;
-                                checkMulti2 = false;
 
                             }
                         }
-                    }
+
 
                     @Override
                     public void endContact(Contact contact) {
