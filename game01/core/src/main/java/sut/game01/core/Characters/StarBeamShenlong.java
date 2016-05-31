@@ -3,7 +3,6 @@ package sut.game01.core.Characters;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
-import org.jbox2d.dynamics.contacts.Contact;
 import playn.core.Layer;
 import playn.core.PlayN;
 import playn.core.util.Callback;
@@ -12,17 +11,15 @@ import sut.game01.core.GamePlay;
 import sut.game01.core.sprite.Sprite;
 import sut.game01.core.sprite.SpriteLoader;
 
-import java.util.ArrayList;
-
 /**
  * Created by Chatethakhun on 19/5/2559.
  */
-public class StarBeam {
+public class StarBeamShenlong {
     private static Sprite sprite;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
     public  static  Body body;
-    private boolean checkContact = false;
+    private World world;
 
 
     public Layer layer() {
@@ -32,20 +29,11 @@ public class StarBeam {
 
 
 
-    public enum State {
-        IDLE
-    };
 
-    public static StarBeam.State state = StarBeam.State.IDLE;
-
-    private int e = 0;
-    private int offset = 0;
+    public StarBeamShenlong(final World world, final float x, final float y) {
 
 
-    public StarBeam(final World world, final float x, final float y) {
-
-
-        sprite = SpriteLoader.getSprite("images/Characters/SandRock/StarBeam.json");
+        sprite = SpriteLoader.getSprite("images/Characters/Shenlong/StarBeamShenlong.json");
         sprite.addCallback(new Callback<Sprite>() {
             @Override
             public void onSuccess(Sprite sprite) {
@@ -69,7 +57,7 @@ public class StarBeam {
     }
 
     private Body initPhysicsBody(World world, float x, float y) {
-        //this.world = world;
+        this.world = world;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyType.DYNAMIC;
         bodyDef.position = new Vec2(0,0);
@@ -88,7 +76,7 @@ public class StarBeam {
 
         body.setLinearDamping(0.2f);
         body.setTransform(new Vec2(x, y), 0f);
-        body.applyForce(new Vec2(1000f, 0f), body.getPosition());
+        body.applyForce(new Vec2(-1000f, 0f), body.getPosition());
         return body;
 
     }
@@ -102,6 +90,8 @@ public class StarBeam {
     public void update(int delta) {
 
         if(hasLoaded == false) return;
+
+
 
 
 

@@ -17,6 +17,7 @@ import sut.game01.core.sprite.SpriteLoader;
 public class Shenlong {
 
     private static Sprite sprite;
+    private final World world;
     private int spriteIndex = 0;
     private boolean hasLoaded = false;
     public static Body body;
@@ -29,6 +30,7 @@ public class Shenlong {
                 (body.getPosition().x / GamePlay.M_PER_PIXEL) - 10,
                 body.getPosition().y / GamePlay.M_PER_PIXEL);
 
+
         e += delta;
         //switch (state) {
           //  case ATTK: StarBeam starBeam;
@@ -38,7 +40,16 @@ public class Shenlong {
         if(e > 200) {
             switch (state) {
                 case IDLE: offset = 0;break;
-                case ATTK: offset = 4;break;
+                case ATTK: offset = 4;
+                    if(spriteIndex == 6) {
+                        StarBeamShenlong starBeamShenlong;
+                        starBeamShenlong = new StarBeamShenlong(world, body.getPosition().x / GamePlay.M_PER_PIXEL  - 100,
+                                body.getPosition().y / GamePlay.M_PER_PIXEL);
+                        GamePlay.addStarBeamShenlong(starBeamShenlong);
+                    }if(spriteIndex == 7) {
+                        state = State.IDLE;
+                    }
+                    break;
                 case HURT: offset = 8;break;
             }
             spriteIndex = offset + ((spriteIndex + 1) % 4);
@@ -77,6 +88,7 @@ public class Shenlong {
 
 
     public Shenlong(final World world, final float x, final float y) {
+        this.world = world;
 
         sprite = SpriteLoader.getSprite("images/Characters/Shenlong/Shenlong.json");
         sprite.addCallback(new Callback<Sprite>() {

@@ -17,7 +17,9 @@ import playn.core.util.Clock;
 import sut.game01.core.Characters.SandRock;
 import sut.game01.core.Characters.Shenlong;
 import sut.game01.core.Characters.StarBeam;
+import sut.game01.core.Characters.StarBeamShenlong;
 import sut.game01.core.Gauge.HealthGauge;
+import sut.game01.core.Gauge.HealthGaugeSandRock;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 
@@ -38,25 +40,33 @@ public class GamePlay extends Screen {
     public static World world;
     private DebugDrawBox2D debugDraw;
     MapSpaceScreen mapSpaceScreen;
+    GameOverScreen gameOverScreen;
     private GroupLayer groupLayer = graphics().createGroupLayer();
+    private GroupLayer groupLayerShenlong = graphics().createGroupLayer();
 
 
     private boolean showDebugDraw = true, checkMatrix = false;
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
-    int check = 0, shenlongHP = 10, sandRockHP = 10, countPlayer = 0;
+    int check = 0, shenlongHP = 0, sandRockHP = 0;
     int[][] matrix = new int[4][4];
-    private boolean checkMulti2 = false;
+    private boolean checkMulti2 = false,checkPlauyer = false;
+    char countPlayer = 'S';
 
 
     SandRock sandrock;
     HealthGauge healthGauge;
+    HealthGaugeSandRock healthGaugeSandRock;
     Shenlong shenlong;
 
 
+
     static ArrayList<StarBeam> starBeamList;
+    static ArrayList<StarBeamShenlong> starBeamShenlongList;
     ArrayList<Body> impactStarBeam = new ArrayList<Body>();
+    ArrayList<Body> impactStarBeamShenlong = new ArrayList<Body>();
+    private String debugString = String.valueOf("");
 
 
     public GamePlay(final ScreenStack ss) {
@@ -80,6 +90,7 @@ public class GamePlay extends Screen {
 
 
         starBeamList = new ArrayList<StarBeam>();
+        starBeamShenlongList = new ArrayList<StarBeamShenlong>();
 
 
     }
@@ -88,7 +99,7 @@ public class GamePlay extends Screen {
         super.wasShown();
         this.layer.add(bgLayer);
         this.layer.add(tableLayer);
-        layer.add(groupLayer);
+
 
         sandrock = new SandRock(world, 50, 400f);
         this.layer.add(sandrock.layer());
@@ -98,6 +109,9 @@ public class GamePlay extends Screen {
 
         healthGauge = new HealthGauge(520f, 50f);
         this.layer.add(healthGauge.layer());
+
+        healthGaugeSandRock = new HealthGaugeSandRock(125f,50f);
+        this.layer.add(healthGaugeSandRock.layer());
 
         Body ground = world.createBody(new BodyDef());
         EdgeShape groundShape = new EdgeShape();
@@ -153,10 +167,333 @@ public class GamePlay extends Screen {
             world.setDebugDraw(debugDraw);
         }
 
+
+
     }
 
     @Override
     public void update(int delta) {
+
+
+
+mouse().setListener(new Mouse.Adapter() {
+    @Override
+    public void onMouseDown(Mouse.ButtonEvent event) {
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (event.x() > 175 && event.x() < 250 && event.y() > 100 && event.y() < 175) {
+                    matrix[0][0] = 1;
+
+                } else if (event.x() > 250 && event.x() < 325 && event.y() > 100 && event.y() < 175) {
+                    matrix[0][1] = 1;
+
+                } else if (event.x() > 325 && event.x() < 400 && event.y() > 100 && event.y() < 175) {
+                    matrix[0][2] = 1;
+
+                } else if (event.x() > 400 && event.x() < 475 && event.y() > 100 && event.y() < 175) {
+                    matrix[0][3] = 1;
+
+                }
+
+                //======================================================================================
+
+                else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
+                    matrix[1][0] = 1;
+
+                } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
+                    matrix[1][1] = 1;
+
+                } else if (event.x() > 325 && event.x() < 400 && event.y() > 175 && event.y() < 250) {
+                    matrix[1][2] = 1;
+
+                } else if (event.x() > 400 && event.x() < 475 && event.y() > 175 && event.y() < 250) {
+                    matrix[1][3] = 1;
+
+                }
+
+                //=======================================================================================
+                else if (event.x() > 175 && event.x() < 250 && event.y() > 250 && event.y() < 325) {
+                    matrix[2][0] = 1;
+
+                } else if (event.x() > 250 && event.x() < 325 && event.y() > 250 && event.y() < 325) {
+                    matrix[2][1] = 1;
+
+                } else if (event.x() > 325 && event.x() < 400 && event.y() > 250 && event.y() < 325) {
+                    matrix[2][2] = 1;
+
+                } else if (event.x() > 400 && event.x() < 475 && event.y() > 250 && event.y() < 325) {
+                    matrix[2][3] = 1;
+
+                }
+
+                //======================================================================================
+                else if (event.x() > 175 && event.x() < 250 && event.y() > 325 && event.y() < 400) {
+                    matrix[3][0] = 1;
+
+                } else if (event.x() > 250 && event.x() < 325 && event.y() > 325 && event.y() < 400) {
+                    matrix[3][1] = 1;
+
+                } else if (event.x() > 325 && event.x() < 400 && event.y() > 325 && event.y() < 400) {
+                    matrix[3][2] = 1;
+
+                } else if (event.x() > 400 && event.x() < 475 && event.y() > 325 && event.y() < 400) {
+                    matrix[3][3] = 1;
+
+                }
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("================================================");
+    }
+
+
+});
+        System.out.println(countPlayer);
+        switch (countPlayer) {
+            case 'S':
+                debugString = "Player 1" ;
+                if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
+                    SandRock.state = SandRock.State.ATTK;
+                    clearMatrix();
+
+                }else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
+                    switch (HealthGauge.state) {
+                        case DEC1:
+                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.FULL;
+                            break;
+                        case DEC2:
+                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1;
+                            break;
+                        case DEC3:
+                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
+                            break;
+                    }
+
+                    clearMatrix();
+                    checkPlauyer = false;
+                    check(checkPlauyer);
+
+                } else if (matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1) {
+                    SandRock.state = SandRock.State.ATTK;
+                    checkMulti2 = true;
+                    clearMatrix();
+
+        }else if (matrix[0][3] == 1 && matrix[1][3] == 1 && matrix[2][3] == 1) {
+                    switch (HealthGauge.state) {
+                        case DEC1:
+                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.FULL;
+                            break;
+                        case DEC2:
+                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1;
+                            break;
+                        case DEC3:
+                            HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
+                            break;
+                    }
+
+                    clearMatrix();
+                    checkPlauyer = false;
+                    check(checkPlauyer);
+
+                }
+
+                world.setContactListener(new ContactListener() {
+                    @Override
+                    public void beginContact(final Contact contact) {
+                        if (contact.getFixtureA().getBody() == Shenlong.body) {
+                            StarBeam.visibleBody();
+                            impactStarBeam.add(StarBeam.body);
+                            checkPlauyer = false;
+                            check(checkPlauyer);
+
+                            if (checkMulti2 == false) {
+                                switch (HealthGauge.state) {
+                                    case FULL:
+                                        HealthGauge.state = HealthGauge.State.DEC1;
+                                        break;
+                                    case DEC1:
+                                        HealthGauge.state = HealthGauge.State.DEC2;
+                                        break;
+                                    case DEC2:
+                                        HealthGauge.state = HealthGauge.State.DEC3;
+                                        break;
+                                    case DEC3:
+                                        HealthGauge.state = HealthGauge.State.EMPTY;
+                                        break;
+                                    case EMPTY:
+                                        ss.push(mapSpaceScreen);
+                                        break;
+                                }
+                                shenlongHP = (shenlongHP + 3);
+
+
+                            } else {
+                                switch (HealthGauge.state) {
+                                    case FULL:
+                                        HealthGauge.state = HealthGauge.State.DEC2;
+                                        break;
+                                    case DEC1:
+                                        HealthGauge.state = HealthGauge.State.DEC3;
+                                        break;
+                                    case DEC2:
+                                        HealthGauge.state = HealthGauge.State.EMPTY;
+                                        break;
+                                    case DEC3:
+                                        HealthGauge.state = HealthGauge.State.EMPTY;
+                                        break;
+                                    case EMPTY:
+                                        ss.push(mapSpaceScreen);
+                                        break;
+                                }
+                                shenlongHP = shenlongHP + 6;
+                            }
+
+                        }
+                        checkPlauyer = true;
+                    }
+
+                    @Override
+                    public void endContact(Contact contact) {
+
+                    }
+
+                    @Override
+                    public void preSolve(Contact contact, Manifold manifold) {
+
+                    }
+
+                    @Override
+                    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+                    }
+                });
+
+                break;
+
+            case 'L':
+                debugString = "Player 2";
+                if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
+                    Shenlong.state = Shenlong.State.ATTK;
+                    checkMulti2 = false;
+                    clearMatrix();
+            }else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
+                    switch (HealthGauge.state) {
+                        case DEC1:
+                            HealthGauge.state = HealthGauge.State.FULL;
+                            break;
+                        case DEC2:
+                            HealthGauge.state = HealthGauge.State.DEC1;
+                            break;
+                        case DEC3:
+                            HealthGauge.state = HealthGauge.State.DEC2;
+                            break;
+                    }
+                    clearMatrix();
+                    checkPlauyer = true;
+                    check(checkPlauyer);
+
+
+                } else if (matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1) {
+                    Shenlong.state = Shenlong.State.ATTK;
+                    checkMulti2 = true;
+                    clearMatrix();
+
+
+                } else if (matrix[0][3] == 1 && matrix[1][3] == 1 && matrix[2][3] == 1) {
+                    switch (HealthGauge.state) {
+                        case DEC1:
+                            HealthGauge.state = HealthGauge.State.FULL;
+                            break;
+                        case DEC2:
+                            HealthGauge.state = HealthGauge.State.DEC1;
+                            break;
+                        case DEC3:
+                            HealthGauge.state = HealthGauge.State.DEC2;
+                            break;
+                    }
+                    clearMatrix();
+                    checkPlauyer = true;
+                    check(checkPlauyer);
+
+                }
+                world.setContactListener(new ContactListener() {
+                    @Override
+                    public void beginContact(final Contact contact) {
+                        if (contact.getFixtureA().getBody() == SandRock.body) {
+                            System.out.println("Hit");
+                            StarBeamShenlong.visibleBody();
+                            checkPlauyer = true;
+                            check(checkPlauyer);
+                            impactStarBeamShenlong.add(StarBeamShenlong.body);
+                            checkMulti2 = false;
+                            if (checkMulti2 == false) {
+                                switch (HealthGaugeSandRock.state) {
+                                    case FULL:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1;
+                                        break;
+                                    case DEC1:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
+                                        break;
+                                    case DEC2:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC3;
+                                        break;
+                                    case DEC3:
+                                        ss.push(mapSpaceScreen);
+                                        break;
+                                }
+                                sandRockHP = (shenlongHP + 3);
+
+
+                            } else {
+                                switch (HealthGaugeSandRock.state) {
+                                    case FULL:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC2;
+                                        break;
+                                    case DEC1:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC3;
+                                        break;
+                                    case DEC2:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.state.EMPTY;
+                                        break;
+                                    case DEC3:
+                                        HealthGaugeSandRock.state = HealthGaugeSandRock.State.DEC1.EMPTY;
+                                        break;
+                                    case EMPTY:
+                                        ss.push(mapSpaceScreen);
+                                }
+                                shenlongHP = shenlongHP + 6;
+                                checkMulti2 = false;
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void endContact(Contact contact) {
+
+                    }
+
+                    @Override
+                    public void preSolve(Contact contact, Manifold manifold) {
+
+                    }
+
+                    @Override
+                    public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+                    }
+                });
+                break;
+        }
+        for(Body body: impactStarBeam) {
+            world.destroyBody(body);
+        }
+        for(Body body: impactStarBeamShenlong) {
+            world.destroyBody(body);
+        }
+
         world.step(0.033f, 10, 10);
 
 
@@ -171,389 +508,35 @@ public class GamePlay extends Screen {
             groupLayer.add(starBeam.layer());
         }
 
+        for (StarBeamShenlong starBeamShenlong : starBeamShenlongList) {
+            groupLayerShenlong.add(starBeamShenlong.layer());
+        }
+
         healthGauge.update(delta);
+        healthGaugeSandRock.update(delta);
 
 
-        world.setContactListener(new ContactListener() {
-                                     @Override
-                                     public void beginContact(final Contact contact) {
+    }
 
+    private void attkDouble(boolean checkMulti2) {
 
-                                         switch (countPlayer % 2) {
-                                             case 0:
-                                                 System.out.println("Case 0");
-                                                 mouse().setListener(new Mouse.Adapter() {
 
-                                                                         @Override
-                                                                         public void onMouseUp(Mouse.ButtonEvent event) {
 
+    }
 
-                                                                             for (int i = 0; i < matrix.length; i++) {
-                                                                                 for (int j = 0; j < matrix[i].length; j++) {
-                                                                                     if (event.x() > 175 && event.x() < 250 && event.y() > 100 && event.y() < 175) {
-                                                                                         matrix[0][0] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 250 && event.x() < 325 && event.y() > 100 && event.y() < 175) {
-                                                                                         matrix[0][1] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 325 && event.x() < 400 && event.y() > 100 && event.y() < 175) {
-                                                                                         matrix[0][2] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 400 && event.x() < 475 && event.y() > 100 && event.y() < 175) {
-                                                                                         matrix[0][3] = 1;
-                                                                                        
-                                                                                     }
+    private void check(boolean checkPlauyer) {
+        if(checkPlauyer == false) {
+            countPlayer = 'L';
+        }else {
+            countPlayer = 'S';
+        }
 
-                                                                                     //======================================================================================
 
-                                                                                     else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
-                                                                                         matrix[1][0] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
-                                                                                         matrix[1][1] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 325 && event.x() < 400 && event.y() > 175 && event.y() < 250) {
-                                                                                         matrix[1][2] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 400 && event.x() < 475 && event.y() > 175 && event.y() < 250) {
-                                                                                         matrix[1][3] = 1;
-                                                                                        
-                                                                                     }
 
-                                                                                     //=======================================================================================
-                                                                                     else if (event.x() > 175 && event.x() < 250 && event.y() > 250 && event.y() < 325) {
-                                                                                         matrix[2][0] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 250 && event.x() < 325 && event.y() > 250 && event.y() < 325) {
-                                                                                         matrix[2][1] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 325 && event.x() < 400 && event.y() > 250 && event.y() < 325) {
-                                                                                         matrix[2][2] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 400 && event.x() < 475 && event.y() > 250 && event.y() < 325) {
-                                                                                         matrix[2][3] = 1;
-                                                                                        
-                                                                                     }
 
-                                                                                     //======================================================================================
-                                                                                     else if (event.x() > 175 && event.x() < 250 && event.y() > 325 && event.y() < 400) {
-                                                                                         matrix[3][0] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 250 && event.x() < 325 && event.y() > 325 && event.y() < 400) {
-                                                                                         matrix[3][1] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 325 && event.x() < 400 && event.y() > 325 && event.y() < 400) {
-                                                                                         matrix[3][2] = 1;
-                                                                                        
-                                                                                     } else if (event.x() > 400 && event.x() < 475 && event.y() > 325 && event.y() < 400) {
-                                                                                         matrix[3][3] = 1;
-                                                                                        
-                                                                                     }
-                                                                                     System.out.print(matrix[i][j] + " ");
-                                                                                 }
-                                                                                 System.out.println();
-                                                                             }
-                                                                             if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
-                                                                                 SandRock.state = SandRock.State.ATTK;
-                                                                                 clearMatrix();
 
 
-                                                                             } else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
-                                                                                 switch (HealthGauge.state) {
-                                                                                     case DEC1:
-                                                                                         HealthGauge.state = HealthGauge.State.FULL;
-                                                                                         break;
-                                                                                     case DEC2:
-                                                                                         HealthGauge.state = HealthGauge.State.DEC1;
-                                                                                         break;
-                                                                                     case DEC3:
-                                                                                         HealthGauge.state = HealthGauge.State.DEC2;
-                                                                                         break;
-                                                                                 }
-                                                                                 while (shenlongHP < 10) {
-                                                                                     shenlongHP = shenlongHP + 3;
-                                                                                 }
-
-
-                                                                             } else if (matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1) {
-                                                                                 SandRock.state = SandRock.State.ATTK;
-                                                                                 checkMulti2 = true;
-                                                                                 clearMatrix();
-
-
-                                                                             } else if (matrix[0][3] == 1 && matrix[1][3] == 1 && matrix[2][3] == 1) {
-                                                                                 switch (HealthGauge.state) {
-                                                                                     case DEC1:
-                                                                                         HealthGauge.state = HealthGauge.State.FULL;
-                                                                                         break;
-                                                                                     case DEC2:
-                                                                                         HealthGauge.state = HealthGauge.State.DEC1;
-                                                                                         break;
-                                                                                     case DEC3:
-                                                                                         HealthGauge.state = HealthGauge.State.DEC2;
-                                                                                         break;
-                                                                                 }
-                                                                                 while (shenlongHP < 10) {
-                                                                                     shenlongHP = shenlongHP + 3;
-                                                                                 }
-                                                                                 clearMatrix();
-
-                                                                             }
-
-
-                                                                             System.out.println(check / 16);
-                                                                             System.out.println("=====================================");
-                                                                         }
-                                                                     }
-
-
-                                                 );
-
-
-                                                 if (contact.getFixtureA().getBody() == Shenlong.body && contact.getFixtureB().getBody() == StarBeam.body) {
-
-                                                     StarBeam.visibleBody();
-                                                     impactStarBeam.add(StarBeam.body);
-                                                     Shenlong.body.applyForce(new Vec2(-500f, 0f), Shenlong.body.getPosition());
-
-                                                     int sum = 0;
-
-                                                     System.out.println("Hit sum = " + sum);
-                                                     sum++;
-
-                                                     if (checkMulti2 == false) {
-                                                         switch (HealthGauge.state) {
-                                                             case FULL:
-                                                                 HealthGauge.state = HealthGauge.State.DEC1;
-                                                                 break;
-                                                             case DEC1:
-                                                                 HealthGauge.state = HealthGauge.State.DEC2;
-                                                                 break;
-                                                             case DEC2:
-                                                                 HealthGauge.state = HealthGauge.State.DEC3;
-                                                                 break;
-                                                         }
-                                                         checkMulti2 = false;
-                                                         shenlongHP = (shenlongHP - 3);
-
-                                                     } else {
-                                                         switch (HealthGauge.state) {
-                                                             case FULL:
-                                                                 HealthGauge.state = HealthGauge.State.DEC2;
-                                                                 break;
-                                                             case DEC1:
-                                                                 HealthGauge.state = HealthGauge.State.DEC3;
-                                                                 break;
-                                                         }
-                                                         shenlongHP = shenlongHP - 6;
-                                                         checkMulti2 = false;
-                                                     }
-                                                 }
-                                                 System.out.println("count = " + countPlayer);
-
-                                                 break;
-
-
-                                             case 1:
-                                                 System.out.println("Case 1");
-                                                 mouse().setListener(new Mouse.Adapter() {
-                                                     @Override
-                                                     public void onMouseDown(Mouse.ButtonEvent event) {
-                                                         for (int i = 0; i < matrix.length; i++) {
-                                                             for (int j = 0; j < matrix[i].length; j++) {
-                                                                 if (event.x() > 175 && event.x() < 250 && event.y() > 100 && event.y() < 175) {
-                                                                     matrix[0][0] = 1;
-                                                                 } else if (event.x() > 250 && event.x() < 325 && event.y() > 100 && event.y() < 175) {
-                                                                     matrix[0][1] = 1;
-                                                                 } else if (event.x() > 325 && event.x() < 400 && event.y() > 100 && event.y() < 175) {
-                                                                     matrix[0][2] = 1;
-                                                                     
-                                                                 } else if (event.x() > 400 && event.x() < 475 && event.y() > 100 && event.y() < 175) {
-                                                                     matrix[0][3] = 1;
-                                                                    
-                                                                 }
-
-                                                                 //======================================================================================
-
-                                                                 else if (event.x() > 175 && event.x() < 250 && event.y() > 175 && event.y() < 250) {
-                                                                     matrix[1][0] = 1;
-                                                                    
-                                                                 } else if (event.x() > 250 && event.x() < 325 && event.y() > 175 && event.y() < 250) {
-                                                                     matrix[1][1] = 1;
-                                                                    
-                                                                 } else if (event.x() > 325 && event.x() < 400 && event.y() > 175 && event.y() < 250) {
-                                                                     matrix[1][2] = 1;
-                                                                    
-                                                                 } else if (event.x() > 400 && event.x() < 475 && event.y() > 175 && event.y() < 250) {
-                                                                     matrix[1][3] = 1;
-                                                                    
-                                                                 }
-
-                                                                 //=======================================================================================
-                                                                 else if (event.x() > 175 && event.x() < 250 && event.y() > 250 && event.y() < 325) {
-                                                                     matrix[2][0] = 1;
-                                                                    
-                                                                 } else if (event.x() > 250 && event.x() < 325 && event.y() > 250 && event.y() < 325) {
-                                                                     matrix[2][1] = 1;
-                                                                    
-                                                                 } else if (event.x() > 325 && event.x() < 400 && event.y() > 250 && event.y() < 325) {
-                                                                     matrix[2][2] = 1;
-                                                                    
-                                                                 } else if (event.x() > 400 && event.x() < 475 && event.y() > 250 && event.y() < 325) {
-                                                                     matrix[2][3] = 1;
-                                                                    
-                                                                 }
-
-                                                                 //======================================================================================
-                                                                 else if (event.x() > 175 && event.x() < 250 && event.y() > 325 && event.y() < 400) {
-                                                                     matrix[3][0] = 1;
-                                                                    
-                                                                 } else if (event.x() > 250 && event.x() < 325 && event.y() > 325 && event.y() < 400) {
-                                                                     matrix[3][1] = 1;
-                                                                    
-                                                                 } else if (event.x() > 325 && event.x() < 400 && event.y() > 325 && event.y() < 400) {
-                                                                     matrix[3][2] = 1;
-                                                                    
-                                                                 } else if (event.x() > 400 && event.x() < 475 && event.y() > 325 && event.y() < 400) {
-                                                                     matrix[3][3] = 1;
-                                                                    
-                                                                 }
-                                                                 System.out.print(matrix[i][j] + " ");
-                                                             }
-                                                             System.out.println();
-                                                         }
-                                                         if (matrix[0][0] == 1 && matrix[0][1] == 1 && matrix[0][2] == 1) {
-                                                             SandRock.state = SandRock.State.ATTK;
-                                                             clearMatrix();
-
-
-                                                         } else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
-                                                             switch (HealthGauge.state) {
-                                                                 case DEC1:
-                                                                     HealthGauge.state = HealthGauge.State.FULL;
-                                                                     break;
-                                                                 case DEC2:
-                                                                     HealthGauge.state = HealthGauge.State.DEC1;
-                                                                     break;
-                                                                 case DEC3:
-                                                                     HealthGauge.state = HealthGauge.State.DEC2;
-                                                                     break;
-                                                             }
-                                                             while (shenlongHP < 10) {
-                                                                 shenlongHP = shenlongHP + 3;
-                                                             }
-
-
-                                                         } else if (matrix[1][2] == 1 && matrix[2][2] == 1 && matrix[3][2] == 1) {
-                                                             SandRock.state = SandRock.State.ATTK;
-                                                             checkMulti2 = true;
-                                                             clearMatrix();
-
-
-                                                         } else if (matrix[0][3] == 1 && matrix[1][3] == 1 && matrix[2][3] == 1) {
-                                                             switch (HealthGauge.state) {
-                                                                 case DEC1:
-                                                                     HealthGauge.state = HealthGauge.State.FULL;
-                                                                     break;
-                                                                 case DEC2:
-                                                                     HealthGauge.state = HealthGauge.State.DEC1;
-                                                                     break;
-                                                                 case DEC3:
-                                                                     HealthGauge.state = HealthGauge.State.DEC2;
-                                                                     break;
-                                                             }
-                                                             while (shenlongHP < 10) {
-                                                                 shenlongHP = shenlongHP + 3;
-                                                             }
-                                                             clearMatrix();
-
-                                                         }
-
-                                                         System.out.println(check / 16);
-                                                         System.out.println("=====================================");
-
-
-                                                     }
-                                                 });
-                                                 if (contact.getFixtureA().getBody() == Shenlong.body && contact.getFixtureB().getBody() == StarBeam.body) {
-
-                                                     StarBeam.visibleBody();
-                                                     impactStarBeam.add(StarBeam.body);
-                                                     Shenlong.body.applyForce(new Vec2(-500f, 0f), Shenlong.body.getPosition());
-
-                                                     int sum = 0;
-
-                                                     System.out.println("Hit sum = " + sum);
-                                                     sum++;
-
-                                                     if (checkMulti2 == false) {
-                                                         switch (HealthGauge.state) {
-                                                             case FULL:
-                                                                 HealthGauge.state = HealthGauge.State.DEC1;
-                                                                 break;
-                                                             case DEC1:
-                                                                 HealthGauge.state = HealthGauge.State.DEC2;
-                                                                 break;
-                                                             case DEC2:
-                                                                 HealthGauge.state = HealthGauge.State.DEC3;
-                                                                 break;
-                                                         }
-                                                         checkMulti2 = false;
-                                                         shenlongHP = (shenlongHP - 3);
-
-                                                     } else {
-                                                         switch (HealthGauge.state) {
-                                                             case FULL:
-                                                                 HealthGauge.state = HealthGauge.State.DEC2;
-                                                                 break;
-                                                             case DEC1:
-                                                                 HealthGauge.state = HealthGauge.State.DEC3;
-                                                                 break;
-                                                         }
-                                                         shenlongHP = shenlongHP - 6;
-                                                         checkMulti2 = false;
-                                                     }
-                                                 }
-                                                 System.out.println("count = " + countPlayer);
-
-                                                 break;
-                                         }
-
-
-                                     }
-
-
-                                     @Override
-                                     public void endContact(Contact contact) {
-
-                                     }
-
-                                     @Override
-                                     public void preSolve(Contact contact, Manifold manifold) {
-
-                                     }
-
-                                     @Override
-                                     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
-
-                                     }
-                                 }
-
-        );
-
-
-
-
-
-
-                                for(Body body:impactStarBeam){
-                                        world.destroyBody(body);
-                                        }
-
-
-}
-
-
+    }
 
 
     @Override
@@ -564,11 +547,12 @@ public class GamePlay extends Screen {
             debugDraw.getCanvas().clear();
             world.drawDebugData();
             debugDraw.getCanvas().setFillColor(Color.rgb(0, 255, 0));
-            debugDraw.getCanvas().drawText("Shenlong HP = " + shenlongHP  , 500, 100);
-            debugDraw.getCanvas().drawText("Sandrock HP = " + sandRockHP , 50, 100);
+            debugDraw.getCanvas().drawText("Shenlong Score = " + shenlongHP, 500, 100);
+            debugDraw.getCanvas().drawText("Sandrock Score = " + sandRockHP , 50, 100);
+            debugDraw.getCanvas().drawText(debugString,300,80);
 
         }
-    sandrock.paint(clock);
+        sandrock.paint(clock);
 
 
         shenlong.paint(clock);
@@ -579,7 +563,13 @@ public class GamePlay extends Screen {
             layer.add(starBeam.layer());
         }
 
-    healthGauge.paint(clock);
+        for(StarBeamShenlong starBeamShenlong : starBeamShenlongList) {
+            starBeamShenlong.paint(clock);
+            layer.add(starBeamShenlong.layer());
+        }
+
+        healthGauge.paint(clock);
+        healthGaugeSandRock.paint(clock);
 
 
     }
@@ -587,7 +577,9 @@ public class GamePlay extends Screen {
 
     public void clearMatrix() {
         matrix = new int[4][4];
-        countPlayer+= 1;
+
+
+
     }
 
     public static void addStarBeam(StarBeam starBeam) {
@@ -595,6 +587,9 @@ public class GamePlay extends Screen {
     }
 
 
+    public static void addStarBeamShenlong(StarBeamShenlong starBeamShenlong) {
+        starBeamShenlongList.add(starBeamShenlong);
+    }
 }
 
 
