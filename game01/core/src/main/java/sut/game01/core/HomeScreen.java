@@ -3,6 +3,11 @@ package sut.game01.core;
 import playn.core.*;
 import playn.core.util.Clock;
 import react.UnitSlot;
+import sut.game01.core.Characters.SandRock;
+import sut.game01.core.Characters.Shenlong;
+import sut.game01.core.Characters.StarBeam;
+import sut.game01.core.Gauge.HealthGauge;
+import sut.game01.core.Gauge.HealthGaugeSandRock;
 import tripleplay.game.Screen;
 import tripleplay.game.ScreenStack;
 import tripleplay.game.UIScreen;
@@ -73,6 +78,8 @@ public class HomeScreen extends Screen {
             @Override
             public void onMouseDown(Mouse.ButtonEvent event) {
                 ss.push(gamePlay);
+                gamePlay.clearScreen();
+
             }
         });
 
