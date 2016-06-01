@@ -39,7 +39,7 @@ public class GamePlay extends Screen {
     private final ImageLayer bgLayer;
     private final ImageLayer tableLayer;
     public static World world;
-    private DebugDrawBox2D debugDraw;
+    public  DebugDrawBox2D debugDraw;
     MapSpaceScreen mapSpaceScreen;
     GameOverScreen gameOverScreen;
     private GroupLayer groupLayer = graphics().createGroupLayer();
@@ -51,16 +51,18 @@ public class GamePlay extends Screen {
     public static float M_PER_PIXEL = 1 / 26.666667f;
     private static int width = 24;
     private static int height = 18;
-    int check = 0, shenlongHP = 0, sandRockHP = 0;
+    int check = 0;
+     int shenlongHP = 0;
+     int sandRockHP = 0;
     int[][] matrix = new int[4][4];
-    private boolean checkMulti2 = false,checkPlauyer = false,checkMultiSheenlong = false;
-    char countPlayer = 'S';
+    public  boolean checkMulti2 = false,checkPlauyer = false,checkMultiSheenlong = false;
+     char countPlayer = 'S';
 
 
-    SandRock sandrock;
-    HealthGauge healthGauge;
-    HealthGaugeSandRock healthGaugeSandRock;
-    Shenlong shenlong;
+    static SandRock sandrock;
+    static HealthGauge healthGauge;
+    static HealthGaugeSandRock healthGaugeSandRock;
+    static Shenlong shenlong;
     StarBeam starBeam;
 
 
@@ -144,7 +146,7 @@ public class GamePlay extends Screen {
                         ss.remove(ss.top());
                         world.destroyBody(SandRock.body);
                         world.destroyBody(Shenlong.body);
-                        world.destroyBody(StarBeam.body);
+                        //world.destroyBody(StarBeam.body);
                         sandrock.layer().destroy();
                         shenlong.layer().destroy();
                         healthGaugeSandRock.layer().destroy();
@@ -157,6 +159,8 @@ public class GamePlay extends Screen {
                         checkMulti2 = false;
                         checkMultiSheenlong = false;
                         debugDraw.getCanvas().clear();
+
+
 
 
                 }
@@ -283,7 +287,7 @@ mouse().setListener(new Mouse.Adapter() {
                     clearMatrix();
 
                 }else if (matrix[1][0] == 1 && matrix[2][0] == 1 && matrix[3][0] == 1) {
-                    switch (HealthGauge.state) {
+                    switch (HealthGaugeSandRock.state) {
                         case DEC1:
                             HealthGaugeSandRock.state = HealthGaugeSandRock.State.FULL;
                             break;
@@ -305,7 +309,7 @@ mouse().setListener(new Mouse.Adapter() {
                     clearMatrix();
 
         }else if (matrix[0][3] == 1 && matrix[1][3] == 1 && matrix[2][3] == 1) {
-                    switch (HealthGauge.state) {
+                    switch (HealthGaugeSandRock.state) {
                         case DEC1:
                             HealthGaugeSandRock.state = HealthGaugeSandRock.State.FULL;
                             break;
@@ -619,6 +623,10 @@ mouse().setListener(new Mouse.Adapter() {
 
     public static void addStarBeamShenlong(StarBeamShenlong starBeamShenlong) {
         starBeamShenlongList.add(starBeamShenlong);
+    }
+    public void clearScreen() {
+
+
     }
 }
 

@@ -32,6 +32,8 @@ public class MapSpaceScreen extends Screen {
         this.mapColonyScreen = new MapColonyScreen(ss);
 
 
+
+
         Image bgImage = assets().getImage("images/space.png");
         bgLayer = graphics().createImageLayer(bgImage);
 
@@ -65,6 +67,7 @@ public class MapSpaceScreen extends Screen {
             public void onMouseDown(Mouse.ButtonEvent event) {
                 for (i = 0;i <= ss.size(); i++){
                     ss.remove(ss.top());
+
                 }
             }
         });
